@@ -11,6 +11,7 @@ const page = () => {
       <Landing/>
       <Edu/>
       <Skill/>
+     
       <Project/>
       <Contact/>
 
