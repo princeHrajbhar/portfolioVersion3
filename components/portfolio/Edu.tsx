@@ -26,11 +26,26 @@ const UltraEnhancedPortfolio = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
+
+  // Check system color scheme preference
+  useEffect(() => {
+    const checkDarkMode = () => {
+      setIsDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
+    };
+    
+    checkDarkMode();
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addEventListener('change', checkDarkMode);
+    
+    return () => mediaQuery.removeEventListener('change', checkDarkMode);
+  }, []);
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     setScrollProgress(latest * 100);
@@ -48,6 +63,7 @@ const UltraEnhancedPortfolio = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Timeline data remains the same
   const timelineData: TimelineItem[] = [
     {
       id: 'cert-1',
@@ -144,10 +160,18 @@ const UltraEnhancedPortfolio = () => {
 
   const getTabColor = (tab: TabType) => {
     switch (tab) {
-      case 'education': return 'bg-gradient-to-r from-blue-500 to-blue-600';
-      case 'experience': return 'bg-gradient-to-r from-green-500 to-green-600';
-      case 'certifications': return 'bg-gradient-to-r from-purple-500 to-purple-600';
-      default: return 'bg-gradient-to-r from-gray-500 to-gray-600';
+      case 'education': return isDarkMode 
+        ? 'bg-gradient-to-r from-blue-600 to-blue-700' 
+        : 'bg-gradient-to-r from-blue-400 to-blue-500';
+      case 'experience': return isDarkMode 
+        ? 'bg-gradient-to-r from-green-600 to-green-700' 
+        : 'bg-gradient-to-r from-green-400 to-green-500';
+      case 'certifications': return isDarkMode 
+        ? 'bg-gradient-to-r from-purple-600 to-purple-700' 
+        : 'bg-gradient-to-r from-purple-400 to-purple-500';
+      default: return isDarkMode 
+        ? 'bg-gradient-to-r from-gray-600 to-gray-700' 
+        : 'bg-gradient-to-r from-gray-400 to-gray-500';
     }
   };
 
@@ -178,19 +202,27 @@ const UltraEnhancedPortfolio = () => {
   return (
     <div 
       ref={containerRef}
-      className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-4 md:p-8 lg:p-12 relative overflow-hidden"
+      className={`min-h-screen p-4 md:p-8 lg:p-12 relative overflow-hidden ${
+        isDarkMode 
+          ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white'
+          : 'bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 text-gray-900'
+      }`}
     >
       {[...Array(20)].map((_, i) => (
         <Particle
           key={i}
           x={`${Math.random() * 100}%`}
           y={`${Math.random() * 100}%`}
-          color={i % 3 === 0 ? 'bg-blue-400/30' : i % 2 === 0 ? 'bg-purple-400/30' : 'bg-green-400/30'}
+          color={
+            isDarkMode
+              ? i % 3 === 0 ? 'bg-blue-400/30' : i % 2 === 0 ? 'bg-purple-400/30' : 'bg-green-400/30'
+              : i % 3 === 0 ? 'bg-blue-300/30' : i % 2 === 0 ? 'bg-purple-300/30' : 'bg-indigo-300/30'
+          }
         />
       ))}
 
       <motion.div 
-        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 z-50"
+        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 z-50"
         style={{ width: `${scrollProgress}%` }}
       />
 
@@ -202,13 +234,19 @@ const UltraEnhancedPortfolio = () => {
           className="mb-8 md:mb-16 text-center md:text-left"
         >
           <motion.h1 
-            className="text-4xl md:text-6xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-green-400 mt-8"
+            className={`text-4xl md:text-6xl font-bold mb-2 bg-clip-text text-transparent mt-8 ${
+              isDarkMode 
+                ? 'bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400'
+                : 'bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500'
+            }`}
             whileHover={{ scale: 1.02 }}
           >
             My Professional Journey
           </motion.h1>
           <motion.p 
-            className="text-lg md:text-xl text-gray-300 max-w-2xl"
+            className={`text-lg md:text-xl max-w-2xl ${
+              isDarkMode ? 'text-gray-300' : 'text-gray-600'
+            }`}
             initial={{ opacity: 0 }}
             animate={hasScrolled ? { opacity: 1 } : {}}
             transition={{ delay: 0.3 }}
@@ -229,7 +267,9 @@ const UltraEnhancedPortfolio = () => {
               whileHover={{ 
                 scale: 1.05,
                 y: -3,
-                boxShadow: "0 10px 20px rgba(0,0,0,0.2)"
+                boxShadow: isDarkMode 
+                  ? "0 10px 20px rgba(0,0,0,0.2)" 
+                  : "0 10px 20px rgba(0,0,0,0.1)"
               }}
               whileTap={{ scale: 0.95 }}
               onClick={() => {
@@ -239,7 +279,9 @@ const UltraEnhancedPortfolio = () => {
               className={`px-6 py-3 rounded-xl font-medium transition-all relative overflow-hidden flex items-center gap-2 ${
                 activeTab === tab.id
                   ? `${getTabColor(tab.id)} text-white shadow-lg`
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                  : isDarkMode 
+                    ? 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                    : 'bg-white text-gray-700 hover:bg-gray-100 shadow'
               }`}
             >
               {tab.icon}
@@ -257,7 +299,11 @@ const UltraEnhancedPortfolio = () => {
 
         <div className="relative">
           <motion.div 
-            className="absolute left-4 md:left-8 top-0 h-full w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-green-500 rounded-full hidden md:block"
+            className={`absolute left-4 md:left-8 top-0 h-full w-1 rounded-full hidden md:block ${
+              isDarkMode 
+                ? 'bg-gradient-to-b from-blue-500 via-purple-500 to-indigo-500'
+                : 'bg-gradient-to-b from-blue-400 via-purple-400 to-indigo-400'
+            }`}
             initial={{ scaleY: 0 }}
             animate={hasScrolled ? { scaleY: 1 } : {}}
             transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
@@ -268,7 +314,11 @@ const UltraEnhancedPortfolio = () => {
               {filteredData.map((_, i) => (
                 <motion.div
                   key={`mobile-dot-${i}`}
-                  className="w-3 h-3 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 mb-8"
+                  className={`w-3 h-3 rounded-full mb-8 ${
+                    isDarkMode 
+                      ? 'bg-gradient-to-r from-blue-400 to-purple-500'
+                      : 'bg-gradient-to-r from-blue-300 to-purple-400'
+                  }`}
                   initial={{ scale: 0 }}
                   animate={hasScrolled ? { scale: 1 } : {}}
                   transition={{ delay: 0.2 + i * 0.1 }}
@@ -316,9 +366,9 @@ const UltraEnhancedPortfolio = () => {
                       ease: "easeInOut"
                     }}
                     className={`absolute left-0 md:left-8 top-6 h-5 w-5 rounded-full ${
-                      item.type === 'education' ? 'bg-blue-500' :
-                      item.type === 'experience' ? 'bg-green-500' :
-                      'bg-purple-500'
+                      item.type === 'education' ? isDarkMode ? 'bg-blue-500' : 'bg-blue-400' :
+                      item.type === 'experience' ? isDarkMode ? 'bg-green-500' : 'bg-green-400' :
+                      isDarkMode ? 'bg-purple-500' : 'bg-purple-400'
                     } transform -translate-x-1/2 z-10 flex items-center justify-center shadow-lg`}
                   >
                     {getIcon(item.type, 14)}
@@ -329,17 +379,21 @@ const UltraEnhancedPortfolio = () => {
                     onClick={() => handleItemClick(item.id)}
                     className={`ml-10 md:ml-24 p-5 md:p-6 rounded-xl cursor-pointer transition-all duration-300 ${
                       isHovering === item.id
-                        ? 'bg-gray-800 shadow-xl'
-                        : 'bg-gray-800/90 hover:bg-gray-800'
+                        ? isDarkMode ? 'bg-gray-800 shadow-xl' : 'bg-white shadow-xl'
+                        : isDarkMode ? 'bg-gray-800/90 hover:bg-gray-800' : 'bg-white/90 hover:bg-white'
                     } ${
                       expandedItem === item.id ? 'ring-2 ring-opacity-50 ' + 
-                        (item.type === 'education' ? 'ring-blue-500' :
-                         item.type === 'experience' ? 'ring-green-500' :
-                         'ring-purple-500') : ''
+                        (item.type === 'education' ? isDarkMode ? 'ring-blue-500' : 'ring-blue-400' :
+                         item.type === 'experience' ? isDarkMode ? 'ring-green-500' : 'ring-green-400' :
+                         isDarkMode ? 'ring-purple-500' : 'ring-purple-400') : ''
+                    } border ${
+                      isDarkMode ? 'border-gray-700' : 'border-gray-200'
                     }`}
                     whileHover={!isMobile ? { 
                       scale: 1.02,
-                      boxShadow: "0 10px 25px -5px rgba(0,0,0,0.3)"
+                      boxShadow: isDarkMode 
+                        ? "0 10px 25px -5px rgba(0,0,0,0.3)"
+                        : "0 10px 25px -5px rgba(0,0,0,0.1)"
                     } : {}}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -351,23 +405,27 @@ const UltraEnhancedPortfolio = () => {
                             color: isHovering === item.id || expandedItem === item.id ? 
                               item.type === 'education' ? '#60a5fa' : 
                               item.type === 'experience' ? '#4ade80' : 
-                              '#a78bfa' : 'white'
+                              '#a78bfa' : isDarkMode ? 'white' : 'text-gray-800'
                           }}
                         >
                           {item.title}
                         </motion.h3>
                         <motion.p 
-                          className="text-base md:text-lg text-gray-300"
+                          className={`text-base md:text-lg ${
+                            isDarkMode ? 'text-gray-300' : 'text-gray-600'
+                          }`}
                           animate={{
                             x: isHovering === item.id || expandedItem === item.id ? 5 : 0
                           }}
                         >
                           {item.institution || item.company}
-                          {item.position && <span className="text-gray-400"> • {item.position}</span>}
+                          {item.position && <span className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}> • {item.position}</span>}
                         </motion.p>
                       </div>
                       <motion.span 
-                        className="mt-2 md:mt-0 px-3 py-1 bg-gray-700 rounded-full text-xs md:text-sm font-medium"
+                        className={`mt-2 md:mt-0 px-3 py-1 rounded-full text-xs md:text-sm font-medium ${
+                          isDarkMode ? 'bg-gray-700' : 'bg-gray-200'
+                        }`}
                         animate={{
                           scale: isHovering === item.id || expandedItem === item.id ? 1.05 : 1
                         }}
@@ -392,9 +450,9 @@ const UltraEnhancedPortfolio = () => {
                                 initial={{ opacity: 0, x: -10 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: 0.1 + i * 0.05 }}
-                                className="text-gray-300 flex items-start"
+                                className={`flex items-start ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
                               >
-                                <span className="text-blue-400 mr-2">•</span> {desc}
+                                <span className={`${isDarkMode ? 'text-blue-400' : 'text-blue-500'} mr-2`}>•</span> {desc}
                               </motion.li>
                             ))}
                           </ul>
@@ -413,9 +471,11 @@ const UltraEnhancedPortfolio = () => {
                                   animate={{ scale: 1, opacity: 1 }}
                                   transition={{ type: 'spring', stiffness: 200 }}
                                   className={`px-3 py-1 rounded-full text-xs font-medium ${
-                                    item.type === 'education' ? 'bg-blue-900/50 text-blue-300' :
-                                    item.type === 'experience' ? 'bg-green-900/50 text-green-300' :
-                                    'bg-purple-900/50 text-purple-300'
+                                    item.type === 'education' 
+                                      ? isDarkMode ? 'bg-blue-900/50 text-blue-300' : 'bg-blue-100 text-blue-800'
+                                      : item.type === 'experience' 
+                                        ? isDarkMode ? 'bg-green-900/50 text-green-300' : 'bg-green-100 text-green-800'
+                                        : isDarkMode ? 'bg-purple-900/50 text-purple-300' : 'bg-purple-100 text-purple-800'
                                   }`}
                                 >
                                   {skill}
@@ -433,7 +493,7 @@ const UltraEnhancedPortfolio = () => {
                         color: isHovering === item.id || expandedItem === item.id ? 
                           item.type === 'education' ? '#60a5fa' : 
                           item.type === 'experience' ? '#4ade80' : 
-                          '#a78bfa' : '#60a5fa'
+                          '#a78bfa' : isDarkMode ? '#60a5fa' : '#3b82f6'
                       }}
                       className="mt-3 flex items-center text-sm md:text-base font-medium"
                     >
