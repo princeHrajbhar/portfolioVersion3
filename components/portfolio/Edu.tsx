@@ -25,6 +25,7 @@ const UltraEnhancedPortfolio = () => {
   const [isHovering, setIsHovering] = useState<string | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -33,6 +34,9 @@ const UltraEnhancedPortfolio = () => {
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     setScrollProgress(latest * 100);
+    if (latest > 0.01 && !hasScrolled) {
+      setHasScrolled(true);
+    }
   });
 
   useEffect(() => {
@@ -45,8 +49,6 @@ const UltraEnhancedPortfolio = () => {
   }, []);
 
   const timelineData: TimelineItem[] = [
-    
-  
     {
       id: 'cert-1',
       title: 'Deep Learning Specialization',
@@ -71,32 +73,6 @@ const UltraEnhancedPortfolio = () => {
       ],
       type: 'education',
       skills: ['Java', 'C++', 'Embedded Systems', 'IoT']
-    },
-    {
-      id: 'exp-2',
-      title: 'Full-Stack Developer Intern',
-      company: 'CodeCraft Innovations',
-      position: 'Intern',
-      duration: 'Jul 2023 - Oct 2023',
-      description: [
-        'Developed and maintained company’s e-commerce platform',
-        'Integrated payment gateway APIs',
-        'Improved website load time by 40%'
-      ],
-      type: 'experience',
-      skills: ['React.js', 'Node.js', 'MongoDB', 'Express']
-    },
-    {
-      id: 'cert-2',
-      title: 'AWS Certified Cloud Practitioner',
-      company: 'Amazon Web Services',
-      duration: 'Jun 2023',
-      description: [
-        'Learned AWS core services: EC2, S3, Lambda',
-        'Deployed serverless applications using AWS Lambda and API Gateway'
-      ],
-      type: 'certification',
-      skills: ['AWS', 'Cloud Computing', 'Serverless']
     },
     {
       id: 'edu-3',
@@ -221,12 +197,12 @@ const UltraEnhancedPortfolio = () => {
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: -40 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={hasScrolled ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, type: 'spring' }}
           className="mb-8 md:mb-16 text-center md:text-left"
         >
           <motion.h1 
-            className="text-4xl md:text-6xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-green-400"
+            className="text-4xl md:text-6xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-green-400 mt-8"
             whileHover={{ scale: 1.02 }}
           >
             My Professional Journey
@@ -234,7 +210,7 @@ const UltraEnhancedPortfolio = () => {
           <motion.p 
             className="text-lg md:text-xl text-gray-300 max-w-2xl"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={hasScrolled ? { opacity: 1 } : {}}
             transition={{ delay: 0.3 }}
           >
             Explore my educational background, work experience, and professional certifications
@@ -244,7 +220,7 @@ const UltraEnhancedPortfolio = () => {
         <motion.div 
           className="flex flex-wrap gap-3 mb-8 md:mb-12 justify-center md:justify-start"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={hasScrolled ? { opacity: 1 } : {}}
           transition={{ delay: 0.4 }}
         >
           {tabs.map((tab) => (
@@ -283,7 +259,7 @@ const UltraEnhancedPortfolio = () => {
           <motion.div 
             className="absolute left-4 md:left-8 top-0 h-full w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-green-500 rounded-full hidden md:block"
             initial={{ scaleY: 0 }}
-            animate={{ scaleY: 1 }}
+            animate={hasScrolled ? { scaleY: 1 } : {}}
             transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
           />
 
@@ -294,7 +270,7 @@ const UltraEnhancedPortfolio = () => {
                   key={`mobile-dot-${i}`}
                   className="w-3 h-3 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 mb-8"
                   initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
+                  animate={hasScrolled ? { scale: 1 } : {}}
                   transition={{ delay: 0.2 + i * 0.1 }}
                 />
               ))}
@@ -305,7 +281,7 @@ const UltraEnhancedPortfolio = () => {
             <motion.div
               key={activeTab}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={hasScrolled ? { opacity: 1, y: 0 } : {}}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
               className="space-y-6 md:space-y-8"
@@ -315,7 +291,7 @@ const UltraEnhancedPortfolio = () => {
                   key={item.id}
                   layout
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  animate={hasScrolled ? { opacity: 1, y: 0 } : {}}
                   transition={{ 
                     duration: 0.5, 
                     delay: index * 0.1,
@@ -481,7 +457,7 @@ const UltraEnhancedPortfolio = () => {
       <motion.div
         className="fixed bottom-6 right-6 z-50"
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        animate={hasScrolled ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 1.5 }}
       >
         <motion.button

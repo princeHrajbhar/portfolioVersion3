@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { FiGithub, FiExternalLink, FiCode, FiServer, FiLayers } from 'react-icons/fi';
 import { FaReact, FaNodeJs } from 'react-icons/fa';
 import { SiTypescript, SiNextdotjs, SiTailwindcss, SiGraphql, SiMongodb } from 'react-icons/si';
@@ -29,6 +29,13 @@ export default function ProjectsPage() {
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isHovered, setIsHovered] = useState<string | null>(null);
+  const pageRef = useRef<HTMLDivElement>(null);
+  
+  const isInView = useInView(pageRef, {
+    once: true,
+    margin: "-100px",
+    amount: 0.1
+  });
 
   const projects: Project[] = [
     {
@@ -138,8 +145,34 @@ export default function ProjectsPage() {
     </motion.div>
   );
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { 
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-4 md:p-8 lg:p-12 relative overflow-hidden">
+    <div 
+      ref={pageRef}
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-4 md:p-8 lg:p-12 relative overflow-hidden"
+    >
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[
           { icon: <SiNextdotjs />, name: 'Next.js' },
@@ -153,11 +186,14 @@ export default function ProjectsPage() {
         ))}
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <motion.div
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        variants={containerVariants}
+        className="max-w-7xl mx-auto relative z-10 mt-8"
+      >
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          variants={itemVariants}
           className="mb-12 text-center"
         >
           <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
@@ -169,10 +205,8 @@ export default function ProjectsPage() {
         </motion.div>
 
         <motion.div 
+          variants={itemVariants}
           className="flex flex-wrap gap-3 mb-8 justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
         >
           {['all', 'showcase', 'fullstack', 'completed', 'in-progress'].map((filter) => (
             <motion.button
@@ -191,120 +225,117 @@ export default function ProjectsPage() {
           ))}
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence>
-            {filteredProjects.map((project) => (
+        <motion.div 
+          variants={containerVariants}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          {filteredProjects.map((project, index) => (
+            <motion.div
+              key={`project-${project.id}`}
+              variants={itemVariants}
+              custom={index}
+              className="relative group"
+              onMouseEnter={() => setIsHovered(project.id)}
+              onMouseLeave={() => setIsHovered(null)}
+            >
               <motion.div
-                key={`project-${project.id}`}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3, type: 'spring' }}
-                className="relative group"
-                onMouseEnter={() => setIsHovered(project.id)}
-                onMouseLeave={() => setIsHovered(null)}
+                className={`h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 border border-gray-200 dark:border-gray-700 ${
+                  selectedProject?.id === project.id 
+                    ? 'ring-2 ring-blue-500 dark:ring-blue-400' 
+                    : 'hover:shadow-xl'
+                }`}
+                whileHover={{ y: -5 }}
+                onClick={() => setSelectedProject(project)}
               >
-                <motion.div
-                  className={`h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 border border-gray-200 dark:border-gray-700 ${
-                    selectedProject?.id === project.id 
-                      ? 'ring-2 ring-blue-500 dark:ring-blue-400' 
-                      : 'hover:shadow-xl'
-                  }`}
-                  whileHover={{ y: -5 }}
-                  onClick={() => setSelectedProject(project)}
-                >
-                  <div className="relative h-48 overflow-hidden">
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-500 opacity-20"
-                      animate={{
-                        opacity: isHovered === project.id ? 0.3 : 0
-                      }}
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <FiLayers className="text-5xl text-gray-300 dark:text-gray-700" />
-                    </div>
+                <div className="relative h-48 overflow-hidden">
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-500 opacity-20"
+                    animate={{
+                      opacity: isHovered === project.id ? 0.3 : 0
+                    }}
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <FiLayers className="text-5xl text-gray-300 dark:text-gray-700" />
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="text-xl font-bold">{project.title}</h3>
+                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${getStatusColor(project.status)}`}>
+                      {getStatusLabel(project.status)}
+                    </span>
                   </div>
 
-                  <div className="p-6">
-                    <div className="flex justify-between items-start mb-3">
-                      <h3 className="text-xl font-bold">{project.title}</h3>
-                      <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${getStatusColor(project.status)}`}>
-                        {getStatusLabel(project.status)}
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
+
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.technologies.map((tech, i) => (
+                      <motion.div
+                        key={`${project.id}-tech-${i}`}
+                        className="text-2xl"
+                        whileHover={{ y: -3 }}
+                        title={tech.name}
+                      >
+                        {tech.icon}
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <span 
+                        key={`${project.id}-tag-${tag}`}
+                        className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-gray-600 dark:text-gray-300"
+                      >
+                        {tag}
                       </span>
-                    </div>
-
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
-
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.technologies.map((tech, i) => (
-                        <motion.div
-                          key={`${project.id}-tech-${i}`}
-                          className="text-2xl"
-                          whileHover={{ y: -3 }}
-                          title={tech.name}
-                        >
-                          {tech.icon}
-                        </motion.div>
-                      ))}
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <span 
-                          key={`${project.id}-tag-${tag}`}
-                          className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-gray-600 dark:text-gray-300"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                    ))}
                   </div>
-                </motion.div>
-
-                {isHovered === project.id && (
-                  <motion.div 
-                    className="absolute top-4 right-4 flex gap-2"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                  >
-                    {project.githubUrl && (
-                      <motion.a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 bg-gray-800 text-white rounded-full shadow-lg"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <FiGithub />
-                      </motion.a>
-                    )}
-                    {project.liveUrl && (
-                      <motion.a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 bg-blue-500 text-white rounded-full shadow-lg"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <FiExternalLink />
-                      </motion.a>
-                    )}
-                  </motion.div>
-                )}
+                </div>
               </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
+
+              {isHovered === project.id && (
+                <motion.div 
+                  className="absolute top-4 right-4 flex gap-2"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  {project.githubUrl && (
+                    <motion.a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 bg-gray-800 text-white rounded-full shadow-lg"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <FiGithub />
+                    </motion.a>
+                  )}
+                  {project.liveUrl && (
+                    <motion.a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 bg-blue-500 text-white rounded-full shadow-lg"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <FiExternalLink />
+                    </motion.a>
+                  )}
+                </motion.div>
+              )}
+            </motion.div>
+          ))}
+        </motion.div>
 
         {filteredProjects.length === 0 && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            variants={itemVariants}
             className="text-center py-16"
           >
             <div className="text-5xl mb-4">🔍</div>
@@ -312,22 +343,22 @@ export default function ProjectsPage() {
             <p className="text-gray-600 dark:text-gray-400">Try selecting a different filter</p>
           </motion.div>
         )}
-      </div>
+      </motion.div>
 
       <AnimatePresence>
         {selectedProject && (
           <motion.div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
             onClick={() => setSelectedProject(null)}
           >
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative">

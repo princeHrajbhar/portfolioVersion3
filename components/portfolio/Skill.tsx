@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll,  useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'framer-motion';
 import { FiCode, FiCpu, FiDatabase, FiLayers, FiServer, FiSmartphone } from 'react-icons/fi';
 import { FaReact, FaNodeJs, FaPython, FaAws, FaDocker } from 'react-icons/fa';
 import { SiTypescript, SiNextdotjs, SiTailwindcss, SiGraphql, SiPostgresql, SiRedis } from 'react-icons/si';
@@ -28,12 +28,20 @@ const SkillsPage = () => {
   const [isHovering, setIsHovering] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const skillsContainerRef = useRef<HTMLDivElement>(null);
+  
+  // Check if skills container is in view
+  const isInView = useInView(skillsContainerRef, {
+    once: true,
+    margin: "-100px",
+    amount: 0.1
+  });
+
+  // Scroll effects
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
-
-  // Parallax effects
   const yRange = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const opacityRange = useTransform(scrollYProgress, [0, 0.8, 1], [1, 1, 0]);
 
@@ -204,6 +212,30 @@ const SkillsPage = () => {
     }
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { 
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
   // Floating particles background
   const Particle = ({ x, y, color, delay }: { x: string; y: string; color: string; delay: number }) => (
     <motion.div
@@ -329,102 +361,99 @@ const SkillsPage = () => {
           ))}
         </motion.div>
 
-        {/* Skills grid */}
+        {/* Skills grid with scroll-triggered animations */}
         <motion.div
-          layout
+          ref={skillsContainerRef}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={containerVariants}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
         >
-          <AnimatePresence mode="popLayout">
-            {filteredSkills.map((skill) => (
+          {filteredSkills.map((skill, index) => (
+            <motion.div
+              key={skill.id}
+              variants={itemVariants}
+              custom={index}
+              className="relative group"
+              onMouseEnter={() => !isMobile && setIsHovering(skill.id)}
+              onMouseLeave={() => !isMobile && setIsHovering(null)}
+            >
+              {/* Skill card */}
               <motion.div
-                key={skill.id}
-                layout
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.3, type: 'spring' }}
-                className="relative group"
-                onMouseEnter={() => !isMobile && setIsHovering(skill.id)}
-                onMouseLeave={() => !isMobile && setIsHovering(null)}
+                onClick={() => setSelectedSkill(selectedSkill?.id === skill.id ? null : skill)}
+                className={`h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 border border-gray-200 dark:border-gray-700 ${
+                  selectedSkill?.id === skill.id 
+                    ? 'ring-2 ring-blue-500 dark:ring-blue-400' 
+                    : 'hover:shadow-xl'
+                }`}
+                whileHover={!isMobile ? { 
+                  y: -5,
+                  boxShadow: "0 15px 30px -5px rgba(0,0,0,0.1)"
+                } : {}}
+                whileTap={{ scale: 0.98 }}
               >
-                {/* Skill card */}
-                <motion.div
-                  layout
-                  onClick={() => setSelectedSkill(selectedSkill?.id === skill.id ? null : skill)}
-                  className={`h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 border border-gray-200 dark:border-gray-700 ${
-                    selectedSkill?.id === skill.id 
-                      ? 'ring-2 ring-blue-500 dark:ring-blue-400' 
-                      : 'hover:shadow-xl'
-                  }`}
-                  whileHover={!isMobile ? { 
-                    y: -5,
-                    boxShadow: "0 15px 30px -5px rgba(0,0,0,0.1)"
-                  } : {}}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="p-6">
-                    {/* Skill icon with floating animation */}
-                    <motion.div
-                      animate={{
-                        y: isHovering === skill.id ? [0, -5, 0] : 0,
-                        rotate: isHovering === skill.id ? [0, 10, -10, 0] : 0
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                      className={`text-4xl mb-4 ${skill.color}`}
-                    >
-                      {skill.icon}
-                    </motion.div>
-
-                    <h3 className="text-xl font-bold mb-1">{skill.name}</h3>
-                    <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${getLevelColor(skill.level)}`}>
-                      {skill.level.charAt(0).toUpperCase() + skill.level.slice(1)}
-                    </span>
-
-                    {/* Experience bar */}
-                    <div className="mt-3 mb-4 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <motion.div 
-                        className={`h-2 rounded-full ${getLevelColor(skill.level).replace('text', 'bg')}`}
-                        initial={{ width: 0 }}
-                        animate={{ width: getLevelWidth(skill.level) }}
-                        transition={{ delay: 0.3, duration: 1, type: 'spring' }}
-                      />
-                    </div>
-
-                    <p className="text-sm text-gray-600 dark:text-gray-300">{skill.experience} experience</p>
-
-                    {/* Expanded details */}
-                    <AnimatePresence>
-                      {selectedSkill?.id === skill.id && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="mt-4 overflow-hidden"
-                        >
-                          <p className="text-sm text-gray-700 dark:text-gray-200">{skill.description}</p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </motion.div>
-
-                {/* Glow effect */}
-                {isHovering === skill.id && !isMobile && (
+                <div className="p-6">
+                  {/* Skill icon with floating animation */}
                   <motion.div
-                    className="absolute inset-0 rounded-xl bg-blue-500/10 pointer-events-none"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  />
-                )}
+                    animate={{
+                      y: isHovering === skill.id ? [0, -5, 0] : 0,
+                      rotate: isHovering === skill.id ? [0, 10, -10, 0] : 0
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    className={`text-4xl mb-4 ${skill.color}`}
+                  >
+                    {skill.icon}
+                  </motion.div>
+
+                  <h3 className="text-xl font-bold mb-1">{skill.name}</h3>
+                  <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${getLevelColor(skill.level)}`}>
+                    {skill.level.charAt(0).toUpperCase() + skill.level.slice(1)}
+                  </span>
+
+                  {/* Experience bar */}
+                  <div className="mt-3 mb-4 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <motion.div 
+                      className={`h-2 rounded-full ${getLevelColor(skill.level).replace('text', 'bg')}`}
+                      initial={{ width: 0 }}
+                      animate={{ width: getLevelWidth(skill.level) }}
+                      transition={{ delay: 0.3, duration: 1, type: 'spring' }}
+                    />
+                  </div>
+
+                  <p className="text-sm text-gray-600 dark:text-gray-300">{skill.experience} experience</p>
+
+                  {/* Expanded details */}
+                  <AnimatePresence>
+                    {selectedSkill?.id === skill.id && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="mt-4 overflow-hidden"
+                      >
+                        <p className="text-sm text-gray-700 dark:text-gray-200">{skill.description}</p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </motion.div>
-            ))}
-          </AnimatePresence>
+
+              {/* Glow effect */}
+              {isHovering === skill.id && !isMobile && (
+                <motion.div
+                  className="absolute inset-0 rounded-xl bg-blue-500/10 pointer-events-none"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                />
+              )}
+            </motion.div>
+          ))}
         </motion.div>
 
         {/* Empty state */}

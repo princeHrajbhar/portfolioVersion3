@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiMail, FiGithub, FiLinkedin,  FiSend } from 'react-icons/fi';
+import { FiMail, FiGithub, FiLinkedin, FiSend } from 'react-icons/fi';
 import { SiUpwork, SiFiverr } from 'react-icons/si';
 
 export default function ContactPage() {
@@ -13,6 +13,65 @@ export default function ContactPage() {
   });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const formRef = useRef<HTMLFormElement>(null);
+  
+  // Refs and state for intersection observers
+  const contactRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const formSectionRef = useRef<HTMLDivElement>(null);
+  const infoSectionRef = useRef<HTMLDivElement>(null);
+  
+  const [headerInView, setHeaderInView] = useState(false);
+  const [formInView, setFormInView] = useState(false);
+  const [infoInView, setInfoInView] = useState(false);
+
+  useEffect(() => {
+    // Store refs in variables for cleanup
+    const contactNode = contactRef.current;
+    const headerNode = headerRef.current;
+    const formNode = formSectionRef.current;
+    const infoNode = infoSectionRef.current;
+
+    const options = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const contactObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setHeaderInView(true);
+      }
+    }, options);
+
+    const headerObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setHeaderInView(true);
+      }
+    }, options);
+
+    const formObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setFormInView(true);
+      }
+    }, options);
+
+    const infoObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setInfoInView(true);
+      }
+    }, options);
+
+    if (contactNode) contactObserver.observe(contactNode);
+    if (headerNode) headerObserver.observe(headerNode);
+    if (formNode) formObserver.observe(formNode);
+    if (infoNode) infoObserver.observe(infoNode);
+
+    return () => {
+      if (contactNode) contactObserver.unobserve(contactNode);
+      if (headerNode) headerObserver.unobserve(headerNode);
+      if (formNode) formObserver.unobserve(formNode);
+      if (infoNode) infoObserver.unobserve(infoNode);
+    };
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -46,21 +105,25 @@ export default function ContactPage() {
     }
   };
 
-  // Floating bubbles animation
+  // Floating bubbles animation - only when header is visible
   const Bubble = ({ delay, size, x, y }: { delay: number; size: string; x: string; y: string }) => (
     <motion.div
       className={`absolute rounded-full bg-blue-400/20 dark:bg-purple-400/20 ${size}`}
       initial={{ opacity: 0, y: 100 }}
-      animate={{ opacity: [0, 0.5, 0], y: [100, -100] }}
+      animate={headerInView ? { opacity: [0, 0.5, 0], y: [100, -100] } : {}}
       transition={{ delay, duration: 10 + Math.random() * 5, repeat: Infinity, ease: "linear" }}
       style={{ left: x, top: y }}
     />
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-4 md:p-8 lg:p-12 relative overflow-hidden">
+    <div 
+      ref={contactRef}
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-4 md:p-8 lg:p-12 relative overflow-hidden"
+      id="contact"
+    >
       {/* Animated background bubbles */}
-      {[...Array(15)].map((_, i) => (
+      {headerInView && [...Array(15)].map((_, i) => (
         <Bubble
           key={`bubble-${i}`}
           delay={i * 0.5}
@@ -73,8 +136,9 @@ export default function ContactPage() {
       <div className="max-w-6xl mx-auto relative z-10 mt-16">
         {/* Header */}
         <motion.div
+          ref={headerRef}
           initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={headerInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="mb-12 text-center"
         >
@@ -87,7 +151,7 @@ export default function ContactPage() {
           <motion.p 
             className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={headerInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.3 }}
           >
             Have a project in mind or want to collaborate? Reach out to me through any of these channels.
@@ -97,9 +161,10 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Form */}
           <motion.div
+            ref={formSectionRef}
             initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            animate={formInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6 }}
             className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 md:p-8"
           >
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
@@ -201,15 +266,19 @@ export default function ContactPage() {
 
           {/* Contact Info */}
           <motion.div
+            ref={infoSectionRef}
             initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            animate={infoInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6 }}
             className="space-y-8"
           >
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 md:p-8">
               <h2 className="text-2xl font-bold mb-6">Direct Contact</h2>
               
               <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={infoInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 0.2 }}
                 whileHover={{ x: 5 }}
                 className="flex items-center gap-4 mb-4 p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
               >
@@ -228,6 +297,9 @@ export default function ContactPage() {
               </motion.div>
 
               <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={infoInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 0.3 }}
                 whileHover={{ x: 5 }}
                 className="flex items-center gap-4 mb-4 p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
               >
@@ -248,6 +320,9 @@ export default function ContactPage() {
               </motion.div>
 
               <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={infoInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 0.4 }}
                 whileHover={{ x: 5 }}
                 className="flex items-center gap-4 mb-4 p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
               >
@@ -272,6 +347,9 @@ export default function ContactPage() {
               <h2 className="text-2xl font-bold mb-6">Collaboration Platforms</h2>
               
               <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={infoInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 0.5 }}
                 whileHover={{ x: 5 }}
                 className="flex items-center gap-4 mb-4 p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
               >
@@ -292,6 +370,9 @@ export default function ContactPage() {
               </motion.div>
 
               <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={infoInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 0.6 }}
                 whileHover={{ x: 5 }}
                 className="flex items-center gap-4 mb-4 p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
               >
