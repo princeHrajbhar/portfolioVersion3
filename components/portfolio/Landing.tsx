@@ -108,7 +108,7 @@ const InteractiveHero = () => {
         muted
         loop
         playsInline
-        className="absolute z-0 w-auto min-w-full min-h-full max-w-none object-cover opacity-20"
+        className="absolute z-0 w-auto min-w-full min-h-full max-w-none object-cover opacity-100"
       >
         <source src="/techex.mp4" type="video/mp4" />
       </video>
