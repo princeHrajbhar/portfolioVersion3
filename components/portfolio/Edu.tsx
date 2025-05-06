@@ -204,7 +204,7 @@ const UltraEnhancedPortfolio = () => {
       ref={containerRef}
       className={`min-h-screen p-4 md:p-8 lg:p-12 relative overflow-hidden ${
         isDarkMode 
-          ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white'
+          ? 'bg-gradient-to-br from-gray-50 to-gray-100 dark:from-black dark:via-purple-900 dark:to-black text-white'
           : 'bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 text-gray-900'
       }`}
     >
@@ -280,7 +280,7 @@ const UltraEnhancedPortfolio = () => {
                 activeTab === tab.id
                   ? `${getTabColor(tab.id)} text-white shadow-lg`
                   : isDarkMode 
-                    ? 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                    ? 'bg-gradient-to-r from-purple-600 to-black text-gray-300 hover:bg-gray-700'
                     : 'bg-white text-gray-700 hover:bg-gray-100 shadow'
               }`}
             >
@@ -379,8 +379,8 @@ const UltraEnhancedPortfolio = () => {
                     onClick={() => handleItemClick(item.id)}
                     className={`ml-10 md:ml-24 p-5 md:p-6 rounded-xl cursor-pointer transition-all duration-300 ${
                       isHovering === item.id
-                        ? isDarkMode ? 'bg-gray-800 shadow-xl' : 'bg-white shadow-xl'
-                        : isDarkMode ? 'bg-gray-800/90 hover:bg-gray-800' : 'bg-white/90 hover:bg-white'
+                        ? isDarkMode ? 'bg-gradient-to-br  dark:from-purple-900 dark:via-black dark:to-purple-900 shadow-xl' : 'bg-white shadow-xl'
+                        : isDarkMode ? 'bg-gradient-to-br  dark:from-black dark:via-purple-900 dark:to-black hover:bg-gray-800' : 'bg-white/90 hover:bg-white'
                     } ${
                       expandedItem === item.id ? 'ring-2 ring-opacity-50 ' + 
                         (item.type === 'education' ? isDarkMode ? 'ring-blue-500' : 'ring-blue-400' :

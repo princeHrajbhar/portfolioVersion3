@@ -119,7 +119,8 @@ export default function ContactPage() {
   return (
     <div 
       ref={contactRef}
-      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-4 md:p-8 lg:p-12 relative overflow-hidden"
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-purple-900 dark:via-black dark:to-purple-900
+ p-4 md:p-8 lg:p-12 relative overflow-hidden"
       id="contact"
     >
       {/* Animated background bubbles */}
@@ -165,7 +166,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, x: -50 }}
             animate={formInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 md:p-8"
+            className="bg-white bg-gradient-to-br  dark:from-purple-900 dark:via-black dark:to-purple-900 rounded-xl shadow-lg p-6 md:p-8"
           >
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
               <FiMail className="text-blue-500" /> Send me a message
@@ -184,7 +185,7 @@ export default function ContactPage() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-black dark:text-white"
                   />
                 </motion.div>
               </div>
@@ -201,7 +202,7 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-black dark:text-white"
                   />
                 </motion.div>
               </div>
@@ -218,7 +219,7 @@ export default function ContactPage() {
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-black dark:text-white"
                   />
                 </motion.div>
               </div>
@@ -272,7 +273,7 @@ export default function ContactPage() {
             transition={{ duration: 0.6 }}
             className="space-y-8"
           >
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 md:p-8">
+            <div className="bg-white bg-gradient-to-br  dark:from-purple-900 dark:via-black dark:to-purple-900 rounded-xl shadow-lg p-6 md:p-8">
               <h2 className="text-2xl font-bold mb-6">Direct Contact</h2>
               
               <motion.div 
@@ -343,7 +344,7 @@ export default function ContactPage() {
               </motion.div>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 md:p-8">
+            <div className="bg-white bg-gradient-to-br  dark:from-purple-900 dark:via-black dark:to-purple-900 rounded-xl shadow-lg p-6 md:p-8">
               <h2 className="text-2xl font-bold mb-6">Collaboration Platforms</h2>
               
               <motion.div 

@@ -259,7 +259,7 @@ const SkillsPage = () => {
   return (
     <div 
       ref={containerRef}
-      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white p-4 md:p-8 lg:p-12 relative overflow-hidden"
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-purple-900 dark:via-black dark:to-purple-900 text-gray-900 dark:text-white p-4 md:p-8 lg:p-12 relative overflow-hidden"
     >
       {/* Animated background particles */}
       {[...Array(30)].map((_, i) => (
@@ -345,7 +345,7 @@ const SkillsPage = () => {
               className={`px-5 py-2.5 rounded-lg font-medium transition-all relative overflow-hidden flex items-center gap-2 ${
                 activeCategory === category.id
                   ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow'
+                  : 'bg-white bg-gradient-to-br  dark:from-purple-900 dark:via-black dark:to-purple-900 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-purple-700 shadow'
               }`}
             >
               {category.icon}
@@ -381,7 +381,7 @@ const SkillsPage = () => {
               {/* Skill card */}
               <motion.div
                 onClick={() => setSelectedSkill(selectedSkill?.id === skill.id ? null : skill)}
-                className={`h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 border border-gray-200 dark:border-gray-700 ${
+                className={`h-full bg-white bg-gradient-to-br  dark:from-purple-900 dark:via-black dark:to-purple-900 rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 border border-gray-200 dark:border-gray-700  ${
                   selectedSkill?.id === skill.id 
                     ? 'ring-2 ring-blue-500 dark:ring-blue-400' 
                     : 'hover:shadow-xl'

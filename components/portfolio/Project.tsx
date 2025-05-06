@@ -171,7 +171,7 @@ export default function ProjectsPage() {
   return (
     <div 
       ref={pageRef}
-      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-4 md:p-8 lg:p-12 relative overflow-hidden"
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-black dark:via-purple-900 dark:to-black p-4 md:p-8 lg:p-12 relative overflow-hidden"
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[
@@ -217,7 +217,7 @@ export default function ProjectsPage() {
               className={`px-4 py-2 rounded-lg font-medium capitalize ${
                 activeFilter === filter
                   ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow'
+                  : 'bg-white bg-gradient-to-br  dark:from-purple-900 dark:via-black dark:to-purple-900 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow'
               }`}
             >
               {filter.replace('-', ' ')}
@@ -239,7 +239,7 @@ export default function ProjectsPage() {
               onMouseLeave={() => setIsHovered(null)}
             >
               <motion.div
-                className={`h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 border border-gray-200 dark:border-gray-700 ${
+                className={`h-full bg-white bg-gradient-to-br  dark:from-purple-900 dark:via-black dark:to-purple-900 rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 border border-gray-200 dark:border-gray-700 ${
                   selectedProject?.id === project.id 
                     ? 'ring-2 ring-blue-500 dark:ring-blue-400' 
                     : 'hover:shadow-xl'
@@ -358,7 +358,7 @@ export default function ProjectsPage() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-white bg-gradient-to-br  dark:from-black dark:via-purple-900 dark:to-black rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative">
