@@ -259,7 +259,7 @@ const SkillsPage = () => {
   return (
     <div 
       ref={containerRef}
-      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-purple-900 dark:via-black dark:to-purple-900 text-gray-900 dark:text-white p-4 md:p-8 lg:p-12 relative overflow-hidden"
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-purple-900 dark:via-black dark:to-purple-900 text-gray-900 dark:text-white  p-4 md:p-8 lg:p-12 relative overflow-hidden"
     >
       {/* Animated background particles */}
       {[...Array(30)].map((_, i) => (
@@ -310,7 +310,7 @@ const SkillsPage = () => {
           className="mb-12 text-center"
         >
           <motion.h1 
-            className="text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-green-500"
+            className="text-4xl md:text-6xl pt-8 font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-green-500"
             whileHover={{ scale: 1.02 }}
           >
             My Skills & Expertise

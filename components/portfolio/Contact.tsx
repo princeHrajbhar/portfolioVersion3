@@ -144,7 +144,7 @@ export default function ContactPage() {
           className="mb-12 text-center"
         >
           <motion.h1 
-            className="text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500"
+            className="text-4xl md:text-6xl pt-font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500"
             whileHover={{ scale: 1.02 }}
           >
             Let&apos;s Connect

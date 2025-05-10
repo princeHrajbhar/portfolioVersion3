@@ -234,7 +234,7 @@ const UltraEnhancedPortfolio = () => {
           className="mb-8 md:mb-16 text-center md:text-left"
         >
           <motion.h1 
-            className={`text-4xl md:text-6xl font-bold mb-2 bg-clip-text text-transparent mt-8 ${
+            className={`text-4xl pt-8 md:text-6xl font-bold mb-2 bg-clip-text text-transparent mt-8 ${
               isDarkMode 
                 ? 'bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400'
                 : 'bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500'
