@@ -1,13 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface NavLink {
   name: string;
-  href: string;
-  sectionId?: string;
+  sectionId: string;
 }
 
 interface NavbarProps {
@@ -28,12 +26,12 @@ export default function Navbar({ activeSection, scrollToSection }: NavbarProps) 
   }, []);
 
   const navLinks: NavLink[] = [
-    { name: 'Home', href: '#home', sectionId: 'home' },
-    { name: 'About', href: '#about', sectionId: 'about' },
-    { name: 'Education', href: '#education', sectionId: 'education' },
-    { name: 'Skills', href: '#skills', sectionId: 'skills' },
-    { name: 'Projects', href: '#projects', sectionId: 'projects' },
-    { name: 'Contact', href: '#contact', sectionId: 'contact' },
+    { name: 'Home', sectionId: 'home' },
+    { name: 'About', sectionId: 'about' },
+    { name: 'Education', sectionId: 'education' },
+    { name: 'Skills', sectionId: 'skills' },
+    { name: 'Projects', sectionId: 'projects' },
+    { name: 'Contact', sectionId: 'contact' },
   ];
 
   const hoverAnimation = {
@@ -48,6 +46,8 @@ export default function Navbar({ activeSection, scrollToSection }: NavbarProps) 
   const handleNavClick = (sectionId: string) => {
     scrollToSection(sectionId);
     setIsMenuOpen(false);
+    // Close menu after a short delay to allow the scroll to complete
+    setTimeout(() => setIsMenuOpen(false), 300);
   };
 
   return (
@@ -65,10 +65,9 @@ export default function Navbar({ activeSection, scrollToSection }: NavbarProps) 
         <div className="flex justify-between items-center">
           {/* Logo */}
           <motion.div whileHover={{ rotate: [-5, 5, -5], transition: { duration: 0.5 } }}>
-            <Link 
-              href="#home" 
+            <button 
+              onClick={() => handleNavClick('home')}
               className="flex items-center space-x-2"
-              onClick={() => scrollToSection('home')}
             >
               <motion.span
                 animate={{ rotate: 360 }}
@@ -80,7 +79,7 @@ export default function Navbar({ activeSection, scrollToSection }: NavbarProps) 
               <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
                 Portfolio
               </span>
-            </Link>
+            </button>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -92,7 +91,7 @@ export default function Navbar({ activeSection, scrollToSection }: NavbarProps) 
                 whileTap={tapAnimation}
               >
                 <button
-                  onClick={() => handleNavClick(link.sectionId!)}
+                  onClick={() => handleNavClick(link.sectionId)}
                   className={`relative px-2 py-1 ${
                     activeSection === link.sectionId
                       ? 'text-purple-400 font-medium'
@@ -116,7 +115,7 @@ export default function Navbar({ activeSection, scrollToSection }: NavbarProps) 
           <motion.button
             whileHover={hoverAnimation}
             whileTap={tapAnimation}
-            className="md:hidden focus:outline-none"
+            className="md:hidden focus:outline-none z-50"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -150,35 +149,45 @@ export default function Navbar({ activeSection, scrollToSection }: NavbarProps) 
         {/* Mobile Menu */}
         <AnimatePresence>
           {isMenuOpen && (
-            <motion.nav
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden overflow-hidden"
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden fixed inset-0 bg-black bg-opacity-70 z-40"
+              onClick={() => setIsMenuOpen(false)}
             >
-              <div className="pt-4 pb-2 space-y-2">
-                {navLinks.map((link) => (
-                  <motion.div
-                    key={link.sectionId}
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.1 * navLinks.indexOf(link) }}
-                  >
-                    <button
-                      onClick={() => handleNavClick(link.sectionId!)}
-                      className={`block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
-                        activeSection === link.sectionId
-                          ? 'bg-gray-800 text-purple-400'
-                          : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                      }`}
+              <motion.nav
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                className="absolute right-0 top-0 h-full w-64 bg-gradient-to-b from-purple-900 to-black p-4 shadow-lg"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="pt-16 space-y-4">
+                  {navLinks.map((link) => (
+                    <motion.div
+                      key={link.sectionId}
+                      initial={{ x: 20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: 0.1 * navLinks.indexOf(link) }}
                     >
-                      {link.name}
-                    </button>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.nav>
+                      <button
+                        onClick={() => handleNavClick(link.sectionId)}
+                        className={`block px-4 py-3 rounded-md text-lg font-medium w-full text-left ${
+                          activeSection === link.sectionId
+                            ? 'bg-purple-800 text-white'
+                            : 'text-gray-300 hover:bg-purple-800 hover:text-white'
+                        }`}
+                      >
+                        {link.name}
+                      </button>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.nav>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>
