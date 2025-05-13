@@ -9,7 +9,6 @@ const InteractiveHero = () => {
   const [displayText, setDisplayText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const ref = useRef(null);
   const inView = useInView(ref, { amount: 0.1 });
 
@@ -100,21 +99,8 @@ const InteractiveHero = () => {
   return (
     <div 
       ref={ref}
-      className="relative min-h-screen w-full overflow-hidden flex items-center justify-center"
+      className="relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-gradient-to-br dark:from-black dark:via-purple-900 dark:to-black"
     >
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute z-0 w-auto min-w-full min-h-full max-w-none object-cover opacity-100"
-      >
-        <source src="/techex.mp4" type="video/mp4" />
-      </video>
-
-      <div className="absolute inset-0 z-1 bg-gradient-to-br from-navy-900/90 via-gray-900/90 to-dark-900/90" />
-
       <motion.div 
         className="relative z-10 container mx-auto px-6 py-24 text-center"
         variants={containerVariants}

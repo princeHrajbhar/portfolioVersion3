@@ -14,20 +14,24 @@ const AboutMe = () => {
           viewport={{ once: true }}
           className="flex flex-col md:flex-row gap-12 items-center"
         >
-          {/* Image Section - Left Side */}
+          {/* Image Section - Left Side with Enhanced Filter */}
           <div className="md:w-1/3">
             <motion.div
               whileHover={{ scale: 1.02 }}
               className="relative group"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl blur-md opacity-75 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <Image
-                src="/prince1.jpg"
-                alt="Prince Kumar"
-                width={400}
-                height={400}
-                className="relative rounded-2xl border-4 border-white dark:border-gray-800 shadow-xl w-full h-auto"
-              />
+              <div className="relative rounded-2xl overflow-hidden">
+                {/* Purple-black filter overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-purple-900/20 to-transparent mix-blend-multiply rounded-2xl z-10"></div>
+                <Image
+                  src="/prince1.jpg"
+                  alt="Prince Kumar"
+                  width={400}
+                  height={400}
+                  className="relative rounded-2xl border-4 border-white dark:border-gray-800 shadow-xl w-full h-auto transform transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
             </motion.div>
           </div>
 
