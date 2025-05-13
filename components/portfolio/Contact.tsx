@@ -5,7 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiMail, FiGithub, FiLinkedin, FiSend } from 'react-icons/fi';
 import { SiUpwork, SiFiverr } from 'react-icons/si';
 
-export default function ContactPage() {
+interface ContactProps {
+  id?: string;
+}
+
+const Contact: React.FC<ContactProps> = ({ id }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -117,6 +121,7 @@ export default function ContactPage() {
   );
 
   return (
+     <section id={id} className="">
     <div 
       ref={contactRef}
       className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-purple-900 dark:via-black dark:to-purple-900
@@ -397,5 +402,7 @@ export default function ContactPage() {
         </div>
       </div>
     </div>
+     </section>
   );
 }
+export default Contact;

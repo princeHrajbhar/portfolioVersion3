@@ -9,6 +9,10 @@ import { TbBrandThreejs } from 'react-icons/tb';
 
 type ProjectStatus = 'completed' | 'in-progress' | 'planned' | 'archived';
 
+interface ProjectProps {
+  id?: string;
+}
+
 interface Project {
   id: string;
   title: string;
@@ -25,7 +29,7 @@ interface Project {
   challenges: string[];
 }
 
-export default function ProjectsPage() {
+const Project: React.FC<ProjectProps> = ({ id }) => {
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isHovered, setIsHovered] = useState<string | null>(null);
@@ -169,317 +173,321 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div 
-      ref={pageRef}
-      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-black dark:via-purple-900 dark:to-black p-4 md:p-8 lg:p-12 relative overflow-hidden"
-    >
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[
-          { icon: <SiNextdotjs />, name: 'Next.js' },
-          { icon: <FaReact />, name: 'React' },
-          { icon: <SiTypescript />, name: 'TypeScript' },
-          { icon: <SiTailwindcss />, name: 'Tailwind CSS' },
-          { icon: <FaNodeJs />, name: 'Node.js' },
-          { icon: <SiMongodb />, name: 'MongoDB' }
-        ].map((tech, i) => (
-          <FloatingTechIcon key={`bg-tech-${i}`} icon={tech.icon} delay={i * 2} />
-        ))}
-      </div>
-
-      <motion.div
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        variants={containerVariants}
-        className="max-w-7xl mx-auto relative z-10 mt-8"
+    <section id={id} className="">
+      <div 
+        ref={pageRef}
+        className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-black dark:via-purple-900 dark:to-black p-4 md:p-8 lg:p-12 relative overflow-hidden"
       >
-        <motion.div
-          variants={itemVariants}
-          className="mb-12 text-center"
-        >
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 pt-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
-            My Projects
-          </h1>
-          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            A showcase of my work with development status, technologies used, and live demos
-          </p>
-        </motion.div>
-
-        <motion.div 
-          variants={itemVariants}
-          className="flex flex-wrap gap-3 mb-8 justify-center"
-        >
-          {['all', 'showcase', 'fullstack', 'completed', 'in-progress'].map((filter) => (
-            <motion.button
-              key={`filter-${filter}`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setActiveFilter(filter)}
-              className={`px-4 py-2 rounded-lg font-medium capitalize ${
-                activeFilter === filter
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                  : 'bg-white bg-gradient-to-br  dark:from-purple-900 dark:via-black dark:to-purple-900 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow'
-              }`}
-            >
-              {filter.replace('-', ' ')}
-            </motion.button>
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[
+            { icon: <SiNextdotjs />, name: 'Next.js' },
+            { icon: <FaReact />, name: 'React' },
+            { icon: <SiTypescript />, name: 'TypeScript' },
+            { icon: <SiTailwindcss />, name: 'Tailwind CSS' },
+            { icon: <FaNodeJs />, name: 'Node.js' },
+            { icon: <SiMongodb />, name: 'MongoDB' }
+          ].map((tech, i) => (
+            <FloatingTechIcon key={`bg-tech-${i}`} icon={tech.icon} delay={i * 2} />
           ))}
+        </div>
+
+        <motion.div
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={containerVariants}
+          className="max-w-7xl mx-auto relative z-10 mt-8"
+        >
+          <motion.div
+            variants={itemVariants}
+            className="mb-12 text-center"
+          >
+            <h1 className="text-4xl md:text-6xl font-bold mb-4 pt-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+              My Projects
+            </h1>
+            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              A showcase of my work with development status, technologies used, and live demos
+            </p>
+          </motion.div>
+
+          <motion.div 
+            variants={itemVariants}
+            className="flex flex-wrap gap-3 mb-8 justify-center"
+          >
+            {['all', 'showcase', 'fullstack', 'completed', 'in-progress'].map((filter) => (
+              <motion.button
+                key={`filter-${filter}`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setActiveFilter(filter)}
+                className={`px-4 py-2 rounded-lg font-medium capitalize ${
+                  activeFilter === filter
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
+                    : 'bg-white bg-gradient-to-br  dark:from-purple-900 dark:via-black dark:to-purple-900 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow'
+                }`}
+              >
+                {filter.replace('-', ' ')}
+              </motion.button>
+            ))}
+          </motion.div>
+
+          <motion.div 
+            variants={containerVariants}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {filteredProjects.map((project, index) => (
+              <motion.div
+                key={`project-${project.id}`}
+                variants={itemVariants}
+                custom={index}
+                className="relative group"
+                onMouseEnter={() => setIsHovered(project.id)}
+                onMouseLeave={() => setIsHovered(null)}
+              >
+                <motion.div
+                  className={`h-full bg-white bg-gradient-to-br  dark:from-purple-900 dark:via-black dark:to-purple-900 rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 border border-gray-200 dark:border-gray-700 ${
+                    selectedProject?.id === project.id 
+                      ? 'ring-2 ring-blue-500 dark:ring-blue-400' 
+                      : 'hover:shadow-xl'
+                  }`}
+                  whileHover={{ y: -5 }}
+                  onClick={() => setSelectedProject(project)}
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-500 opacity-20"
+                      animate={{
+                        opacity: isHovered === project.id ? 0.3 : 0
+                      }}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <FiLayers className="text-5xl text-gray-300 dark:text-gray-700" />
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <div className="flex justify-between items-start mb-3">
+                      <h3 className="text-xl font-bold">{project.title}</h3>
+                      <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${getStatusColor(project.status)}`}>
+                        {getStatusLabel(project.status)}
+                      </span>
+                    </div>
+
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
+
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.technologies.map((tech, i) => (
+                        <motion.div
+                          key={`${project.id}-tech-${i}`}
+                          className="text-2xl"
+                          whileHover={{ y: -3 }}
+                          title={tech.name}
+                        >
+                          {tech.icon}
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span 
+                          key={`${project.id}-tag-${tag}`}
+                          className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-gray-600 dark:text-gray-300"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+
+                {isHovered === project.id && (
+                  <motion.div 
+                    className="absolute top-4 right-4 flex gap-2"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    {project.githubUrl && (
+                      <motion.a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 bg-gray-800 text-white rounded-full shadow-lg"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <FiGithub />
+                      </motion.a>
+                    )}
+                    {project.liveUrl && (
+                      <motion.a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 bg-blue-500 text-white rounded-full shadow-lg"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <FiExternalLink />
+                      </motion.a>
+                    )}
+                  </motion.div>
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {filteredProjects.length === 0 && (
+            <motion.div
+              variants={itemVariants}
+              className="text-center py-16"
+            >
+              <div className="text-5xl mb-4">🔍</div>
+              <h3 className="text-xl font-bold mb-2">No projects found</h3>
+              <p className="text-gray-600 dark:text-gray-400">Try selecting a different filter</p>
+            </motion.div>
+          )}
         </motion.div>
 
-        <motion.div 
-          variants={containerVariants}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {filteredProjects.map((project, index) => (
+        <AnimatePresence>
+          {selectedProject && (
             <motion.div
-              key={`project-${project.id}`}
-              variants={itemVariants}
-              custom={index}
-              className="relative group"
-              onMouseEnter={() => setIsHovered(project.id)}
-              onMouseLeave={() => setIsHovered(null)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+              onClick={() => setSelectedProject(null)}
             >
               <motion.div
-                className={`h-full bg-white bg-gradient-to-br  dark:from-purple-900 dark:via-black dark:to-purple-900 rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 border border-gray-200 dark:border-gray-700 ${
-                  selectedProject?.id === project.id 
-                    ? 'ring-2 ring-blue-500 dark:ring-blue-400' 
-                    : 'hover:shadow-xl'
-                }`}
-                whileHover={{ y: -5 }}
-                onClick={() => setSelectedProject(project)}
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className="bg-white bg-gradient-to-br  dark:from-black dark:via-purple-900 dark:to-black rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
               >
-                <div className="relative h-48 overflow-hidden">
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-500 opacity-20"
-                    animate={{
-                      opacity: isHovered === project.id ? 0.3 : 0
-                    }}
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <FiLayers className="text-5xl text-gray-300 dark:text-gray-700" />
+                <div className="relative">
+                  <div className="h-48 bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                    <FiCode className="text-6xl text-white opacity-30" />
                   </div>
+                  <button
+                    className="absolute top-4 right-4 p-2 bg-white dark:bg-gray-800 rounded-full shadow-lg"
+                    onClick={() => setSelectedProject(null)}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
                 </div>
 
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-3">
-                    <h3 className="text-xl font-bold">{project.title}</h3>
-                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${getStatusColor(project.status)}`}>
-                      {getStatusLabel(project.status)}
-                    </span>
+                <div className="p-6 md:p-8">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
+                    <div>
+                      <h2 className="text-2xl md:text-3xl font-bold mb-2">{selectedProject.title}</h2>
+                      <div className="flex items-center gap-4">
+                        <span className={`text-sm font-semibold px-3 py-1 rounded-full ${getStatusColor(selectedProject.status)}`}>
+                          {getStatusLabel(selectedProject.status)}
+                        </span>
+                        <span className="text-gray-500 dark:text-gray-400 text-sm">
+                          {selectedProject.startDate} - {selectedProject.endDate || 'Present'}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex gap-3 mt-4 md:mt-0">
+                      {selectedProject.githubUrl && (
+                        <motion.a
+                          href={selectedProject.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-4 py-2 bg-gray-800 text-white rounded-lg flex items-center gap-2"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <FiGithub /> Code
+                        </motion.a>
+                      )}
+                      {selectedProject.liveUrl && (
+                        <motion.a
+                          href={selectedProject.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-4 py-2 bg-blue-500 text-white rounded-lg flex items-center gap-2"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <FiExternalLink /> Live Demo
+                        </motion.a>
+                      )}
+                    </div>
                   </div>
 
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
+                  <p className="text-gray-700 dark:text-gray-300 mb-6">{selectedProject.description}</p>
 
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech, i) => (
-                      <motion.div
-                        key={`${project.id}-tech-${i}`}
-                        className="text-2xl"
-                        whileHover={{ y: -3 }}
-                        title={tech.name}
-                      >
-                        {tech.icon}
-                      </motion.div>
-                    ))}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                      <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                        <FiLayers className="text-blue-500" /> Key Features
+                      </h3>
+                      <ul className="space-y-2">
+                        {selectedProject.features.map((feature, i) => (
+                          <motion.li
+                            key={`${selectedProject.id}-feature-${i}`}
+                            className="flex items-start"
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.05 }}
+                          >
+                            <span className="text-green-500 mr-2">✓</span> {feature}
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                        <FiCode className="text-purple-500" /> Challenges
+                      </h3>
+                      <ul className="space-y-2">
+                        {selectedProject.challenges.map((challenge, i) => (
+                          <motion.li
+                            key={`${selectedProject.id}-challenge-${i}`}
+                            className="flex items-start"
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.05 }}
+                          >
+                            <span className="text-yellow-500 mr-2">⚡</span> {challenge}
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span 
-                        key={`${project.id}-tag-${tag}`}
-                        className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-gray-600 dark:text-gray-300"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                  <div className="mt-8">
+                    <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                      <FiServer className="text-cyan-500" /> Technologies Used
+                    </h3>
+                    <div className="flex flex-wrap gap-4">
+                      {selectedProject.technologies.map((tech, i) => (
+                        <motion.div
+                          key={`${selectedProject.id}-modal-tech-${i}`}
+                          className="text-3xl p-3 bg-gray-100 dark:bg-gray-700 rounded-lg"
+                          whileHover={{ scale: 1.1 }}
+                          title={tech.name}
+                        >
+                          {tech.icon}
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </motion.div>
-
-              {isHovered === project.id && (
-                <motion.div 
-                  className="absolute top-4 right-4 flex gap-2"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  {project.githubUrl && (
-                    <motion.a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 bg-gray-800 text-white rounded-full shadow-lg"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <FiGithub />
-                    </motion.a>
-                  )}
-                  {project.liveUrl && (
-                    <motion.a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 bg-blue-500 text-white rounded-full shadow-lg"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <FiExternalLink />
-                    </motion.a>
-                  )}
-                </motion.div>
-              )}
             </motion.div>
-          ))}
-        </motion.div>
-
-        {filteredProjects.length === 0 && (
-          <motion.div
-            variants={itemVariants}
-            className="text-center py-16"
-          >
-            <div className="text-5xl mb-4">🔍</div>
-            <h3 className="text-xl font-bold mb-2">No projects found</h3>
-            <p className="text-gray-600 dark:text-gray-400">Try selecting a different filter</p>
-          </motion.div>
-        )}
-      </motion.div>
-
-      <AnimatePresence>
-        {selectedProject && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
-            onClick={() => setSelectedProject(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white bg-gradient-to-br  dark:from-black dark:via-purple-900 dark:to-black rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="relative">
-                <div className="h-48 bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
-                  <FiCode className="text-6xl text-white opacity-30" />
-                </div>
-                <button
-                  className="absolute top-4 right-4 p-2 bg-white dark:bg-gray-800 rounded-full shadow-lg"
-                  onClick={() => setSelectedProject(null)}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-
-              <div className="p-6 md:p-8">
-                <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
-                  <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-2">{selectedProject.title}</h2>
-                    <div className="flex items-center gap-4">
-                      <span className={`text-sm font-semibold px-3 py-1 rounded-full ${getStatusColor(selectedProject.status)}`}>
-                        {getStatusLabel(selectedProject.status)}
-                      </span>
-                      <span className="text-gray-500 dark:text-gray-400 text-sm">
-                        {selectedProject.startDate} - {selectedProject.endDate || 'Present'}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex gap-3 mt-4 md:mt-0">
-                    {selectedProject.githubUrl && (
-                      <motion.a
-                        href={selectedProject.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-4 py-2 bg-gray-800 text-white rounded-lg flex items-center gap-2"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <FiGithub /> Code
-                      </motion.a>
-                    )}
-                    {selectedProject.liveUrl && (
-                      <motion.a
-                        href={selectedProject.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-4 py-2 bg-blue-500 text-white rounded-lg flex items-center gap-2"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <FiExternalLink /> Live Demo
-                      </motion.a>
-                    )}
-                  </div>
-                </div>
-
-                <p className="text-gray-700 dark:text-gray-300 mb-6">{selectedProject.description}</p>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div>
-                    <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                      <FiLayers className="text-blue-500" /> Key Features
-                    </h3>
-                    <ul className="space-y-2">
-                      {selectedProject.features.map((feature, i) => (
-                        <motion.li
-                          key={`${selectedProject.id}-feature-${i}`}
-                          className="flex items-start"
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: i * 0.05 }}
-                        >
-                          <span className="text-green-500 mr-2">✓</span> {feature}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                      <FiCode className="text-purple-500" /> Challenges
-                    </h3>
-                    <ul className="space-y-2">
-                      {selectedProject.challenges.map((challenge, i) => (
-                        <motion.li
-                          key={`${selectedProject.id}-challenge-${i}`}
-                          className="flex items-start"
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: i * 0.05 }}
-                        >
-                          <span className="text-yellow-500 mr-2">⚡</span> {challenge}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="mt-8">
-                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                    <FiServer className="text-cyan-500" /> Technologies Used
-                  </h3>
-                  <div className="flex flex-wrap gap-4">
-                    {selectedProject.technologies.map((tech, i) => (
-                      <motion.div
-                        key={`${selectedProject.id}-modal-tech-${i}`}
-                        className="text-3xl p-3 bg-gray-100 dark:bg-gray-700 rounded-lg"
-                        whileHover={{ scale: 1.1 }}
-                        title={tech.name}
-                      >
-                        {tech.icon}
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+          )}
+        </AnimatePresence>
+      </div>
+    </section>
   );
-}
+};
+
+export default Project;

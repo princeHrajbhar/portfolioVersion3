@@ -1,4 +1,5 @@
 'use client';
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -6,12 +7,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface NavLink {
   name: string;
   href: string;
+  sectionId?: string;
 }
 
-export default function Navbar() {
+interface NavbarProps {
+  activeSection: string;
+  scrollToSection: (sectionId: string) => void;
+}
+
+export default function Navbar({ activeSection, scrollToSection }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [activeLink, setActiveLink] = useState<string>('/');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,11 +28,12 @@ export default function Navbar() {
   }, []);
 
   const navLinks: NavLink[] = [
-    { name: 'Home', href: '/' },
-    { name: 'Contact', href: '/contact' },
-    { name: 'Team', href: '/team' },
-    { name: 'TechExplore', href: '/techexplore' },
-    { name: 'Vision', href: '/vision' },
+    { name: 'Home', href: '#home', sectionId: 'home' },
+    { name: 'About', href: '#about', sectionId: 'about' },
+    { name: 'Education', href: '#education', sectionId: 'education' },
+    { name: 'Skills', href: '#skills', sectionId: 'skills' },
+    { name: 'Projects', href: '#projects', sectionId: 'projects' },
+    { name: 'Contact', href: '#contact', sectionId: 'contact' },
   ];
 
   const hoverAnimation = {
@@ -38,6 +45,11 @@ export default function Navbar() {
     scale: 0.95,
   };
 
+  const handleNavClick = (sectionId: string) => {
+    scrollToSection(sectionId);
+    setIsMenuOpen(false);
+  };
+
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
@@ -45,15 +57,19 @@ export default function Navbar() {
       transition={{ duration: 0.5 }}
       className={`fixed w-full z-50 ${
         isScrolled
-          ? 'bg-gradient-to-br  dark:from-purple-900 dark:via-black dark:to-purple-900 bg-white/90 backdrop-blur-md shadow-lg'
-          : 'bg-gradient-to-br  dark:from-purple-900 dark:via-black dark:to-purple-900 bg-white/50 backdrop-blur-sm'
+          ? 'bg-gradient-to-br dark:from-purple-900 dark:via-black dark:to-purple-900 bg-white/90 backdrop-blur-md shadow-lg'
+          : 'bg-gradient-to-br dark:from-purple-900 dark:via-black dark:to-purple-900 bg-white/50 backdrop-blur-sm'
       }`}
     >
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <motion.div whileHover={{ rotate: [-5, 5, -5], transition: { duration: 0.5 } }}>
-            <Link href="/" className="flex items-center space-x-2">
+            <Link 
+              href="#home" 
+              className="flex items-center space-x-2"
+              onClick={() => scrollToSection('home')}
+            >
               <motion.span
                 animate={{ rotate: 360 }}
                 transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
@@ -62,7 +78,7 @@ export default function Navbar() {
                 D
               </motion.span>
               <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
-                DarkTheme
+                Portfolio
               </span>
             </Link>
           </motion.div>
@@ -71,28 +87,27 @@ export default function Navbar() {
           <nav className="hidden md:flex space-x-8">
             {navLinks.map((link) => (
               <motion.div
-                key={link.href}
+                key={link.sectionId}
                 whileHover={hoverAnimation}
                 whileTap={tapAnimation}
               >
-                <Link
-                  href={link.href}
+                <button
+                  onClick={() => handleNavClick(link.sectionId!)}
                   className={`relative px-2 py-1 ${
-                    activeLink === link.href
+                    activeSection === link.sectionId
                       ? 'text-purple-400 font-medium'
-                      : 'hover:text-purple-300'
+                      : 'text-white hover:text-purple-300'
                   }`}
-                  onClick={() => setActiveLink(link.href)}
                 >
                   {link.name}
-                  {activeLink === link.href && (
+                  {activeSection === link.sectionId && (
                     <motion.span
                       layoutId="activeLink"
                       className="absolute left-0 bottom-0 w-full h-0.5 bg-purple-500"
                       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                     />
                   )}
-                </Link>
+                </button>
               </motion.div>
             ))}
           </nav>
@@ -145,25 +160,21 @@ export default function Navbar() {
               <div className="pt-4 pb-2 space-y-2">
                 {navLinks.map((link) => (
                   <motion.div
-                    key={link.href}
+                    key={link.sectionId}
                     initial={{ x: -20, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 0.1 * navLinks.indexOf(link) }}
                   >
-                    <Link
-                      href={link.href}
-                      className={`block px-3 py-2 rounded-md text-base font-medium ${
-                        activeLink === link.href
+                    <button
+                      onClick={() => handleNavClick(link.sectionId!)}
+                      className={`block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
+                        activeSection === link.sectionId
                           ? 'bg-gray-800 text-purple-400'
                           : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                       }`}
-                      onClick={() => {
-                        setActiveLink(link.href);
-                        setIsMenuOpen(false);
-                      }}
                     >
                       {link.name}
-                    </Link>
+                    </button>
                   </motion.div>
                 ))}
               </div>

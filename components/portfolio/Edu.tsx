@@ -5,6 +5,10 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-
 import { FiArrowRight, FiCode, FiChevronDown } from 'react-icons/fi';
 import { FaGraduationCap, FaLaptopCode, FaCertificate } from 'react-icons/fa';
 
+interface EduProps {
+  id?: string;
+}
+
 type TimelineItem = {
   id: string;
   title: string;
@@ -19,7 +23,7 @@ type TimelineItem = {
 
 type TabType = 'education' | 'experience' | 'certifications';
 
-const UltraEnhancedPortfolio = () => {
+const Edu: React.FC<EduProps> = ({ id }) => {
   const [activeTab, setActiveTab] = useState<TabType>('education');
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
   const [isHovering, setIsHovering] = useState<string | null>(null);
@@ -200,6 +204,7 @@ const UltraEnhancedPortfolio = () => {
   );
 
   return (
+     <section id={id} className="">
     <div 
       ref={containerRef}
       className={`min-h-screen p-4 md:p-8 lg:p-12 relative overflow-hidden ${
@@ -529,7 +534,8 @@ const UltraEnhancedPortfolio = () => {
         </motion.button>
       </motion.div>
     </div>
+    </section>
   );
 };
 
-export default UltraEnhancedPortfolio;
+export default Edu;

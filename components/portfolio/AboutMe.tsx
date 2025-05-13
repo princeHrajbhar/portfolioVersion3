@@ -3,8 +3,13 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-const AboutMe = () => {
+interface AboutMeProps {
+  id?: string;
+}
+
+const AboutMe: React.FC<AboutMeProps> = ({ id }) => {
   return (
+    <section id={id} className="">
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-purple-900 dark:via-black dark:to-purple-900">
       <div className="max-w-6xl mx-auto">
         <motion.div
@@ -110,6 +115,7 @@ const AboutMe = () => {
           </div>
         </motion.div>
       </div>
+    </section>
     </section>
   );
 };

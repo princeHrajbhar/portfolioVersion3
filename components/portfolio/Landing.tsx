@@ -4,7 +4,12 @@ import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'framer-motion';
 
-const InteractiveHero = () => {
+
+interface LandingProps {
+  id?: string;
+}
+
+const Landing: React.FC<LandingProps> = ({ id }) => {
   const [currentProfession, setCurrentProfession] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -97,6 +102,7 @@ const InteractiveHero = () => {
   }, [gradientColors]);
 
   return (
+     <section id={id} className="">
     <div 
       ref={ref}
       className="relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-gradient-to-br dark:from-black dark:via-purple-900 dark:to-black"
@@ -262,7 +268,8 @@ const InteractiveHero = () => {
         </div>
       </motion.div>
     </div>
+    </section>
   );
 };
 
-export default InteractiveHero;
+export default Landing;

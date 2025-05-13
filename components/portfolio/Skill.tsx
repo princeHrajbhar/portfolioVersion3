@@ -11,6 +11,11 @@ import { JSX } from 'react/jsx-runtime';
 type SkillCategory = 'frontend' | 'backend' | 'devops' | 'database' | 'mobile' | 'all';
 type SkillLevel = 'beginner' | 'intermediate' | 'advanced' | 'expert';
 
+
+interface SkillProps {
+  id?: string;
+}
+
 interface Skill {
   id: string;
   name: string;
@@ -22,7 +27,7 @@ interface Skill {
   color: string;
 }
 
-const SkillsPage = () => {
+const Skill: React.FC<SkillProps> = ({ id }) => {
   const [activeCategory, setActiveCategory] = useState<SkillCategory>('all');
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
   const [isHovering, setIsHovering] = useState<string | null>(null);
@@ -257,6 +262,7 @@ const SkillsPage = () => {
   );
 
   return (
+     <section id={id} className="">
     <div 
       ref={containerRef}
       className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-purple-900 dark:via-black dark:to-purple-900 text-gray-900 dark:text-white  p-4 md:p-8 lg:p-12 relative overflow-hidden"
@@ -489,7 +495,8 @@ const SkillsPage = () => {
         </motion.button>
       </motion.div>
     </div>
+    </section>
   );
 };
 
-export default SkillsPage;
+export default Skill;
