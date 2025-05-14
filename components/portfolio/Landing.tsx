@@ -105,7 +105,7 @@ const Landing: React.FC<LandingProps> = ({ id }) => {
      <section id={id} className="">
     <div 
       ref={ref}
-      className="relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-gradient-to-br dark:from-black dark:via-purple-900 dark:to-black"
+      className="relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-black dark:via-purple-900 dark:to-black"
     >
       <motion.div 
         className="relative z-10 container mx-auto px-6 py-24 text-center"
@@ -179,7 +179,7 @@ const Landing: React.FC<LandingProps> = ({ id }) => {
         </div>
 
         <motion.p 
-          className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-12"
+          className="text-lg md:text-xl  max-w-3xl mx-auto mb-12 text-gray-700 dark:text-gray-300"
           variants={itemVariants}
         >
           Innovative developer with expertise across multiple domains including web, mobile, 
@@ -218,7 +218,7 @@ const Landing: React.FC<LandingProps> = ({ id }) => {
           </motion.button>
 
           <motion.button
-            className="px-8 py-3 rounded-full font-medium relative overflow-hidden border-2 border-purple-400 text-white"
+            className="px-8 py-3 rounded-full font-medium relative overflow-hidden border-2 border-purple-400 text-gray-700 dark:text-gray-300"
             whileHover={{ 
               scale: 1.05,
               boxShadow: '0 10px 20px rgba(139, 92, 246, 0.3)'

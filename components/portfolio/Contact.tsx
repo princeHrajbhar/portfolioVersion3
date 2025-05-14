@@ -124,7 +124,7 @@ const Contact: React.FC<ContactProps> = ({ id }) => {
      <section id={id} className="">
     <div 
       ref={contactRef}
-      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-purple-900 dark:via-black dark:to-purple-900
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-black dark:via-purple-900 dark:to-black
  p-4 md:p-8 lg:p-12 relative overflow-hidden"
       id="contact"
     >

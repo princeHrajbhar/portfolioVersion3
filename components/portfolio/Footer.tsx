@@ -67,7 +67,7 @@ export default function Footer() {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-black dark:via-purple-900 dark:to-black text-blue-300 border-t border-purple-900/30" // Match gradient theme from hero
+      className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-purple-900 dark:via-black dark:to-purple-900 text-blue-300 border-t border-purple-900/30" // Match gradient theme from hero
     >
       <div className="container mx-auto px-6 py-12"> {/* Increased padding to match hero spaciousness */}
         {/* Main footer content */}
@@ -86,10 +86,10 @@ export default function Footer() {
                 transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
                 className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 flex items-center justify-center text-white font-bold text-lg" // Match hero gradient
               >
-                D
+                P
               </motion.span>
               <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500 group-hover:from-purple-300 group-hover:to-blue-400 transition-all"> {/* Match hero text gradient */}
-                DarkTheme
+                Prince.rb
               </span>
             </Link>
             <p className="text-sm text-blue-300 text-center md:text-left max-w-xs"> {/* Matched text color */}
@@ -105,7 +105,7 @@ export default function Footer() {
             transition={{ delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider">
+            <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
               Connect With Me
             </h3>
             <div className="flex space-x-4">
