@@ -3,12 +3,15 @@
 import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'framer-motion';
-
+import { Molle } from 'next/font/google';
 
 interface LandingProps {
   id?: string;
 }
-
+  const molle = Molle({
+  weight: '400',
+  subsets: ['latin'],
+});
 const Landing: React.FC<LandingProps> = ({ id }) => {
   const [currentProfession, setCurrentProfession] = useState(0);
   const [displayText, setDisplayText] = useState('');
@@ -113,43 +116,44 @@ const Landing: React.FC<LandingProps> = ({ id }) => {
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
       >
-        <motion.h1 
-          className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6"
-          variants={itemVariants}
-          onHoverStart={() => setIsHovering(true)}
-          onHoverEnd={() => setIsHovering(false)}
-          animate={{
-            backgroundImage: getGradient(),
-            backgroundSize: isHovering ? '400% 400%' : '200% 200%',
-            textShadow: isHovering ? 
-              "0 0 15px rgba(99, 102, 241, 0.7), 0 0 30px rgba(236, 72, 153, 0.5)" : 
-              "0 0 10px rgba(59, 130, 246, 0.5)",
-            scale: isHovering ? 1.03 : 1
-          }}
-          transition={{ 
-            duration: 0.5,
-            backgroundImage: {
-              duration: 8,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "linear"
-            },
-            scale: {
-              type: "spring",
-              stiffness: 300,
-              damping: 10
-            }
-          }}
-          style={{
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            color: 'transparent',
-            display: 'inline-block',
-            padding: '0 0.25em'
-          }}
-        >
-          Prince Rajbhar
-        </motion.h1>
+      <motion.h1 
+  className={`${molle.className} text-4xl md:text-6xl lg:text-7xl font-bold mb-6`}
+  variants={itemVariants}
+  onHoverStart={() => setIsHovering(true)}
+  onHoverEnd={() => setIsHovering(false)}
+  animate={{
+    backgroundImage: getGradient(),
+    backgroundSize: isHovering ? '400% 400%' : '200% 200%',
+    textShadow: isHovering ? 
+      "0 0 15px rgba(99, 102, 241, 0.7), 0 0 30px rgba(236, 72, 153, 0.5)" : 
+      "0 0 10px rgba(59, 130, 246, 0.5)",
+    scale: isHovering ? 1.03 : 1
+  }}
+  transition={{ 
+    duration: 0.5,
+    backgroundImage: {
+      duration: 8,
+      repeat: Infinity,
+      repeatType: "reverse",
+      ease: "linear"
+    },
+    scale: {
+      type: "spring",
+      stiffness: 300,
+      damping: 10
+    }
+  }}
+  style={{
+    backgroundClip: 'text',
+    WebkitBackgroundClip: 'text',
+    color: 'transparent',
+    display: 'inline-block',
+    padding: '0 0.25em'
+  }}
+>
+  Prince Rajbhar
+</motion.h1>
+
 
         <div className="h-24 md:h-32 mb-8 overflow-hidden relative flex items-center justify-center">
           <AnimatePresence mode="wait">

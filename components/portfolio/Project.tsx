@@ -6,7 +6,12 @@ import { FiGithub, FiExternalLink, FiCode, FiServer, FiLayers } from 'react-icon
 import { FaReact, FaNodeJs } from 'react-icons/fa';
 import { SiTypescript, SiNextdotjs, SiTailwindcss, SiGraphql, SiMongodb } from 'react-icons/si';
 import { TbBrandThreejs } from 'react-icons/tb';
+import { Molle } from 'next/font/google';
 
+  const molle = Molle({
+  weight: '400',
+  subsets: ['latin'],
+});
 type ProjectStatus = 'completed' | 'in-progress' | 'planned' | 'archived';
 
 interface ProjectProps {
@@ -201,9 +206,10 @@ const Project: React.FC<ProjectProps> = ({ id }) => {
             variants={itemVariants}
             className="mb-12 text-center"
           >
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 pt-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
-              My Projects
-            </h1>
+           <h1 className={`${molle.className} text-4xl md:text-6xl font-bold mb-4 pt-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500`}>
+  My Projects
+</h1>
+
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               A showcase of my work with development status, technologies used, and live demos
             </p>

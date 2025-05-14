@@ -2,12 +2,17 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { Molle } from 'next/font/google';
 
 interface AboutMeProps {
   id?: string;
 }
-
+  const molle = Molle({
+  weight: '400',
+  subsets: ['latin'],
+});
 const AboutMe: React.FC<AboutMeProps> = ({ id }) => {
+
   return (
     <section id={id} className="">
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-purple-900 dark:via-black dark:to-purple-900">
@@ -42,15 +47,16 @@ const AboutMe: React.FC<AboutMeProps> = ({ id }) => {
 
           {/* Content Section - Right Side */}
           <div className="md:w-2/3">
-            <motion.h2
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              viewport={{ once: true }}
-              className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4"
-            >
-              About <span className="text-purple-600 dark:text-purple-400">Me</span>
-            </motion.h2>
+          <motion.h2
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  transition={{ delay: 0.2, duration: 0.5 }}
+  viewport={{ once: true }}
+  className={`${molle.className} text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4`}
+>
+  About <span className="text-purple-600 dark:text-purple-400">Me</span>
+</motion.h2>
+
 
             <motion.p
               initial={{ opacity: 0 }}

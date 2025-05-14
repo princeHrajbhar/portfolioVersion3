@@ -4,7 +4,12 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMail, FiGithub, FiLinkedin, FiSend } from 'react-icons/fi';
 import { SiUpwork, SiFiverr } from 'react-icons/si';
+import { Molle } from 'next/font/google';
 
+  const molle = Molle({
+  weight: '400',
+  subsets: ['latin'],
+});
 interface ContactProps {
   id?: string;
 }
@@ -149,11 +154,12 @@ const Contact: React.FC<ContactProps> = ({ id }) => {
           className="mb-12 text-center"
         >
           <motion.h1 
-            className="text-4xl md:text-6xl pt-font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500"
-            whileHover={{ scale: 1.02 }}
-          >
-            Let&apos;s Connect
-          </motion.h1>
+  className={`${molle.className} text-4xl md:text-6xl pt-font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500`}
+  whileHover={{ scale: 1.02 }}
+>
+  Let&apos;s Connect
+</motion.h1>
+
           <motion.p 
             className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
             initial={{ opacity: 0 }}

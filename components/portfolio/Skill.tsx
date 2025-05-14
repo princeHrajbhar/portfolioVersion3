@@ -7,6 +7,12 @@ import { FaReact, FaNodeJs, FaPython, FaAws, FaDocker } from 'react-icons/fa';
 import { SiTypescript, SiNextdotjs, SiTailwindcss, SiGraphql, SiPostgresql, SiRedis } from 'react-icons/si';
 import { TbBrandThreejs } from 'react-icons/tb';
 import { JSX } from 'react/jsx-runtime';
+import { Molle } from 'next/font/google';
+
+  const molle = Molle({
+  weight: '400',
+  subsets: ['latin'],
+});
 
 type SkillCategory = 'frontend' | 'backend' | 'devops' | 'database' | 'mobile' | 'all';
 type SkillLevel = 'beginner' | 'intermediate' | 'advanced' | 'expert';
@@ -315,12 +321,13 @@ const Skill: React.FC<SkillProps> = ({ id }) => {
           transition={{ duration: 0.8, type: 'spring' }}
           className="mb-12 text-center"
         >
-          <motion.h1 
-            className="text-4xl md:text-6xl pt-8 font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-green-500"
-            whileHover={{ scale: 1.02 }}
-          >
-            My Skills & Expertise
-          </motion.h1>
+        <motion.h1
+  className={`${molle.className} text-4xl md:text-6xl pt-8 font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-green-500`}
+  whileHover={{ scale: 1.02 }}
+>
+  My Skills & Expertise
+</motion.h1>
+
           <motion.p 
             className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
             initial={{ opacity: 0 }}

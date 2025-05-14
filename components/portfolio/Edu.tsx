@@ -4,7 +4,12 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { FiArrowRight, FiCode, FiChevronDown } from 'react-icons/fi';
 import { FaGraduationCap, FaLaptopCode, FaCertificate } from 'react-icons/fa';
+import { Molle } from 'next/font/google';
 
+  const molle = Molle({
+  weight: '400',
+  subsets: ['latin'],
+});
 interface EduProps {
   id?: string;
 }
@@ -239,15 +244,16 @@ const Edu: React.FC<EduProps> = ({ id }) => {
           className="mb-8 md:mb-16 text-center md:text-left"
         >
           <motion.h1 
-            className={`text-4xl pt-8 md:text-6xl font-bold mb-2 bg-clip-text text-transparent mt-8 ${
-              isDarkMode 
-                ? 'bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400'
-                : 'bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500'
-            }`}
-            whileHover={{ scale: 1.02 }}
-          >
-            My Professional Journey
-          </motion.h1>
+  className={`${molle.className} text-4xl pt-8 md:text-6xl font-bold mb-2 bg-clip-text text-transparent mt-8 ${
+    isDarkMode 
+      ? 'bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400' 
+      : 'bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500'
+  }`}
+  whileHover={{ scale: 1.02 }}
+>
+  My Professional Journey
+</motion.h1>
+
           <motion.p 
             className={`text-lg md:text-xl max-w-2xl ${
               isDarkMode ? 'text-gray-300' : 'text-gray-600'
