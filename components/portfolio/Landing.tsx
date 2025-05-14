@@ -87,7 +87,7 @@ const Landing: React.FC<LandingProps> = ({ id }) => {
 
   const handleDownload = useCallback(() => {
     const link = document.createElement('a');
-    link.href = '/my-resume.pdf';
+    link.href = '/Prince_resume.pdf';
     link.download = 'Prince-Rajbhar-Resume.pdf';
     document.body.appendChild(link);
     link.click();
@@ -221,23 +221,25 @@ const Landing: React.FC<LandingProps> = ({ id }) => {
             />
           </motion.button>
 
-          <motion.button
-            className="px-8 py-3 rounded-full font-medium relative overflow-hidden border-2 border-purple-400 text-gray-700 dark:text-gray-300"
-            whileHover={{ 
-              scale: 1.05,
-              boxShadow: '0 10px 20px rgba(139, 92, 246, 0.3)'
-            }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <span className="relative z-10">Join My Network</span>
-            <motion.span 
-              className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-green-500/20 opacity-0"
-              animate={{ 
-                opacity: isHovering ? 1 : 0,
-              }}
-              transition={{ duration: 0.4 }}
-            />
-          </motion.button>
+        <motion.a
+  href="https://www.linkedin.com/in/princerajbhar/" // <- your actual profile link
+  target="_blank"
+  rel="noopener noreferrer"
+  className="px-8 py-3 rounded-full font-medium relative overflow-hidden border-2 border-purple-400 text-gray-700 dark:text-gray-300 inline-block cursor-pointer"
+  whileHover={{ 
+    scale: 1.05,
+    boxShadow: '0 10px 20px rgba(139, 92, 246, 0.3)'
+  }}
+  whileTap={{ scale: 0.98 }}
+>
+  <span className="relative z-10">Join My Network</span>
+  <motion.span 
+    className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-green-500/20 opacity-0"
+    animate={{ opacity: isHovering ? 1 : 0 }}
+    transition={{ duration: 0.4 }}
+  />
+</motion.a>
+
         </motion.div>
       </motion.div>
 

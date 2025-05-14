@@ -89,27 +89,40 @@ const Edu: React.FC<EduProps> = ({ id }) => {
     {
       id: 'edu-2',
       title: 'Bachelor of Technology in Computer Science',
-      institution: 'Global Engineering College',
-      duration: '2018 - 2022',
+      institution: 'SRM University Delhi NCR',
+      duration: '2022 - 2026',
       description: [
-        'Graduated with Honors (CGPA: 9.1)',
+        '3rd year 6th Sem',
         'Final year project: "Smart Home Automation System"',
-        'Active member of the coding club and hackathon participant'
+        'Active member of the coding club and hackathon participant',
+        'Active member of Ecell & Incubation Center'
       ],
       type: 'education',
-      skills: ['Java', 'C++', 'Embedded Systems', 'IoT']
+      skills: ['CSE All Core Subject', 'DS/AI with IBM', 'Embedded Systems', 'IoT']
     },
     {
       id: 'edu-3',
-      title: 'Higher Secondary Schooling',
-      institution: 'Sunrise Senior Secondary School',
-      duration: '2016 - 2018',
+      title: 'Hight School',
+      institution: 'S.P.A.M.H.S.S. KATA C. AHROLA AZAMGARH',
+      duration: '2018 - 2019',
       description: [
-        'Major subjects: Physics, Chemistry, Mathematics, Computer Science',
-        'Secured 91% in final board exams'
+        'Major subjects: Science, Hindi, English, Social Science, Computer Science',
+        'Peak performer in current affair and international relationship challenge, 1st spot'
       ],
       type: 'education',
-      skills: ['Physics', 'Maths', 'Problem Solving']
+      skills: ['current affair', 'reasoning','critical thinking', 'Problem Solving']
+    },
+     {
+      id: 'edu-3',
+      title: 'Higher Secondary Education',
+      institution: 'Mangal Murti Higher Secondary school Mumbai ',
+      duration: '2019 - 2021',
+      description: [
+        'Major subjects: Physics, Chemistry, Mathematics, biology, IT Computer Science',
+        '1st Rank in TypeMaster Challenge,2 spot in High acurracy data entry challenge using excel '
+      ],
+      type: 'education',
+      skills: ['MS Excel', 'MS Word','Power Point','Tally Prime', 'HTML', 'CSS', 'IT','Grafic Designing using autodesk Maya & Bulender','Video Editing' ]
     },
     {
       id: 'exp-3',

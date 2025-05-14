@@ -111,7 +111,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ id }) => {
               <motion.a
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                href="/resume.pdf"
+                href="/Prince_resume.pdf"
                 download
                 className="px-6 py-3 border-2 border-purple-500 text-purple-600 dark:text-purple-400 rounded-lg font-medium hover:bg-purple-50 dark:hover:bg-gray-800/50 transition-colors"
               >

@@ -92,7 +92,7 @@ const Contact: React.FC<ContactProps> = ({ id }) => {
     setStatus('sending');
 
     try {
-      const response = await fetch('/api/sendemail', {
+      const response = await fetch('/api/sendmail', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -300,10 +300,10 @@ const Contact: React.FC<ContactProps> = ({ id }) => {
                 <div>
                   <h3 className="font-medium">Email</h3>
                   <a 
-                    href="mailto:your.email@example.com" 
+                    href="mailto:princerajbhar001@gmail.com" 
                     className="text-blue-500 hover:underline"
                   >
-                    your.email@example.com
+                    princerajbhar00@gmail.com
                   </a>
                 </div>
               </motion.div>
@@ -321,12 +321,12 @@ const Contact: React.FC<ContactProps> = ({ id }) => {
                 <div>
                   <h3 className="font-medium">GitHub</h3>
                   <a 
-                    href="https://github.com/yourusername" 
+                    href="https://github.com/princeHrajbhar" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-500 hover:underline"
                   >
-                    github.com/yourusername
+                    github.com/princeHrajbhar
                   </a>
                 </div>
               </motion.div>
@@ -344,12 +344,12 @@ const Contact: React.FC<ContactProps> = ({ id }) => {
                 <div>
                   <h3 className="font-medium">LinkedIn</h3>
                   <a 
-                    href="https://linkedin.com/in/yourusername" 
+                    href="https://www.linkedin.com/in/princerajbhar/" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-500 hover:underline"
                   >
-                    linkedin.com/in/yourusername
+                    linkedin.com/in/princerajbhar/
                   </a>
                 </div>
               </motion.div>
@@ -371,12 +371,12 @@ const Contact: React.FC<ContactProps> = ({ id }) => {
                 <div>
                   <h3 className="font-medium">Upwork</h3>
                   <a 
-                    href="https://upwork.com/freelancers/~yourprofile" 
+                    href="https://www.upwork.com/freelancers/~0189660d939a0d4516" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-500 hover:underline"
                   >
-                    upwork.com/freelancers/~yourprofile
+                    upwork.com/freelancers/~0189660d939a0d4516
                   </a>
                 </div>
               </motion.div>
@@ -394,12 +394,12 @@ const Contact: React.FC<ContactProps> = ({ id }) => {
                 <div>
                   <h3 className="font-medium">Fiverr</h3>
                   <a 
-                    href="https://fiverr.com/yourusername" 
+                    href="https://fiverr.com/" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-500 hover:underline"
                   >
-                    fiverr.com/yourusername
+                    fiverr.com/rbprince
                   </a>
                 </div>
               </motion.div>
