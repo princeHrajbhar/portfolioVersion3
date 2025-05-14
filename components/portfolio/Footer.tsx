@@ -1,6 +1,12 @@
 'use client';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { Molle } from 'next/font/google';
+
+  const molle = Molle({
+  weight: '400',
+  subsets: ['latin'],
+});
 
 interface SocialLink {
   name: string;
@@ -88,9 +94,10 @@ export default function Footer() {
               >
                 P
               </motion.span>
-              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500 group-hover:from-purple-300 group-hover:to-blue-400 transition-all"> {/* Match hero text gradient */}
-                Prince.rb
-              </span>
+          <span className={`${molle.className} text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500 group-hover:from-purple-300 group-hover:to-blue-400 transition-all`}>
+  Prince.rb
+</span>
+
             </Link>
             <p className="text-sm text-blue-300 text-center md:text-left max-w-xs"> {/* Matched text color */}
               Digital creator & developer crafting beautiful web experiences

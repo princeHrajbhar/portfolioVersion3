@@ -2,6 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Molle } from 'next/font/google';
+
+  const molle = Molle({
+  weight: '400',
+  subsets: ['latin'],
+});
 
 interface NavLink {
   name: string;
@@ -78,9 +84,10 @@ export default function Navbar({ activeSection, scrollToSection }: NavbarProps) 
               >
                 P
               </motion.span>
-              <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
-                Prince.rb
-              </span>
+             <span className={`${molle.className} text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent`}>
+  Prince.rb
+</span>
+
             </button>
           </motion.div>
 
