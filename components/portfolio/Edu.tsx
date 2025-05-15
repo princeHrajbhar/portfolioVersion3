@@ -76,9 +76,9 @@ const Edu: React.FC<EduProps> = ({ id }) => {
   const timelineData: TimelineItem[] = [
     {
       id: 'cert-1',
-      title: 'Deep Learning Specialization',
-      company: 'Coursera (deeplearning.ai)',
-      duration: 'Dec 2023',
+      title: 'NEC basic track ',
+      company: 'IIT Bomby)',
+      duration: 'Jan 2025',
       description: [
         'Completed five courses covering CNNs, RNNs, and Sequence Models',
         'Final project: Image classification with transfer learning'
@@ -141,7 +141,7 @@ const Edu: React.FC<EduProps> = ({ id }) => {
     {
       id: 'cert-3',
       title: 'Python for Data Science',
-      company: 'edX (Microsoft)',
+      company: 'IBM',
       duration: 'Mar 2023',
       description: [
         'Mastered data wrangling, visualization, and predictive analytics',
@@ -161,7 +161,140 @@ const Edu: React.FC<EduProps> = ({ id }) => {
       ],
       type: 'certification',
       skills: ['Git', 'GitHub', 'Version Control']
-    }
+    },
+    {
+  id: 'cert-5',
+  title: 'Essentials of Hadoop',
+  company: 'IBM',
+  duration: 'Feb 2023',
+  description: [
+    'Learned fundamentals of distributed computing and Hadoop ecosystem',
+    'Explored HDFS, MapReduce, and performed hands-on tasks on Hadoop clusters'
+  ],
+  type: 'certification',
+  skills: ['Hadoop', 'HDFS', 'MapReduce']
+},
+{
+  id: 'cert-6',
+  title: 'Machine Learning Using R',
+  company: 'IBM',
+  duration: 'Apr 2023',
+  description: [
+    'Developed machine learning models using R programming',
+    'Worked on classification, regression, and clustering techniques'
+  ],
+  type: 'certification',
+  skills: ['R', 'Machine Learning', 'Data Science']
+},
+{
+  id: 'cert-7',
+  title: 'Cloud Application and Development (CAD)',
+  company: 'IBM',
+  duration: 'May 2023',
+  description: [
+    'Explored cloud-native application development and deployment on IBM Cloud',
+    'Built and deployed scalable apps using containerization and microservices'
+  ],
+  type: 'certification',
+  skills: ['Cloud Computing', 'DevOps', 'IBM Cloud', 'Microservices']
+},
+{
+  id: 'cert-8',
+  title: 'Android Studio Using Kotlin',
+  company: 'IBM',
+  duration: 'Jun 2023',
+  description: [
+    'Built Android applications using Kotlin and Android Studio',
+    'Implemented interactive UI, API integrations, and local data storage'
+  ],
+  type: 'certification',
+  skills: ['Kotlin', 'Android Studio', 'Mobile Development']
+},
+{
+  id: 'cert-9',
+  title: 'Blockchain & IoT',
+  company: 'IBM',
+  duration: 'Jul 2023',
+  description: [
+    'Learned integration of blockchain technology with IoT systems',
+    'Built decentralized and secure IoT-based applications'
+  ],
+  type: 'certification',
+  skills: ['Blockchain', 'IoT', 'Smart Contracts']
+},
+{
+  id: 'cert-10',
+  title: 'Big Data Analysis',
+  company: 'IBM',
+  duration: 'Aug 2023',
+  description: [
+    'Analyzed large-scale datasets using big data technologies',
+    'Worked with tools like Hadoop and Spark for real-world data processing'
+  ],
+  type: 'certification',
+  skills: ['Big Data', 'Data Analysis', 'Hadoop', 'Apache Spark']
+},
+{
+  id: 'cert-11',
+  title: 'IBM Watson Assistant Chatbot',
+  company: 'IBM',
+  duration: 'Sep 2023',
+  description: [
+    'Built AI-powered chatbot using IBM Watson Assistant',
+    'Integrated natural language processing for real-time user interaction'
+  ],
+  type: 'certification',
+  skills: ['Chatbot', 'NLP', 'IBM Watson Assistant']
+},
+{
+  id: 'cert-12',
+  title: 'Agile Methodology',
+  company: 'IBM',
+  duration: 'Oct 2023',
+  description: [
+    'Learned Agile principles, Scrum framework, and iterative project management',
+    'Applied Agile practices in software development case studies'
+  ],
+  type: 'certification',
+  skills: ['Agile', 'Scrum', 'Project Management']
+},
+{
+  id: 'cert-13',
+  title: 'Technovate 3.0',
+  company: 'IBM',
+  duration: 'Nov 2023',
+  description: [
+    'Participated in a national-level innovation and technology event',
+    'Showcased project ideas and engaged in hands-on tech workshops'
+  ],
+  type: 'certification',
+  skills: ['Innovation', 'Hackathon', 'Prototyping']
+},
+{
+  id: 'cert-14',
+  title: 'Data Privacy Fundamentals',
+  company: 'IBM',
+  duration: 'Dec 2023',
+  description: [
+    'Understood key data privacy principles and regulations (GDPR, CCPA)',
+    'Learned data protection strategies and compliance best practices'
+  ],
+  type: 'certification',
+  skills: ['Data Privacy', 'Cybersecurity', 'Compliance']
+},
+{
+  id: 'cert-15',
+  title: 'Industrial Training Certification',
+  company: 'IBM',
+  duration: 'Jan 2024',
+  description: [
+    'Completed hands-on industrial training on real-world software projects',
+    'Worked collaboratively following Agile and SDLC methodologies'
+  ],
+  type: 'certification',
+  skills: ['Team Collaboration', 'Real-World Projects', 'Software Development']
+}
+
   ];
 
   const filteredData = timelineData.filter(item => item.type === activeTab || 
@@ -275,7 +408,7 @@ const Edu: React.FC<EduProps> = ({ id }) => {
             animate={hasScrolled ? { opacity: 1 } : {}}
             transition={{ delay: 0.3 }}
           >
-            Explore my educational background, work experience, and professional certifications
+           Explore my educational background, diverse work experience, technical skills, and professional certifications that showcase my journey and growth as a developer.
           </motion.p>
         </motion.div>
 
