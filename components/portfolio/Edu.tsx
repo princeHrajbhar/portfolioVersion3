@@ -74,18 +74,20 @@ const Edu: React.FC<EduProps> = ({ id }) => {
 
   // Timeline data remains the same
   const timelineData: TimelineItem[] = [
-    {
-      id: 'cert-1',
-      title: 'NEC basic track ',
-      company: 'IIT Bomby)',
-      duration: 'Jan 2025',
-      description: [
-        'Completed five courses covering CNNs, RNNs, and Sequence Models',
-        'Final project: Image classification with transfer learning'
-      ],
-      type: 'certification',
-      skills: ['Keras', 'CNN', 'Transfer Learning', 'RNN']
-    },
+   {
+  id: 'cert-1',
+  title: 'NEC Basic Track',
+  company: 'IIT Bombay - National Entrepreneurship Cell',
+  duration: 'Jan 2025',
+  description: [
+    'Completed an intensive entrepreneurship program focused on startup ideation, business model development, and leadership skills',
+    'Engaged in workshops on innovation management, team building, and product-market fit strategies',
+    'Led a capstone project simulating real-world startup challenges to develop problem-solving and decision-making skills'
+  ],
+  type: 'certification',
+  skills: ['Startup Strategy', 'Entrepreneurship', 'Leadership', 'Innovation Management', 'Business Model Development', 'Team Building', 'Problem Solving']
+},
+
     {
       id: 'edu-2',
       title: 'Bachelor of Technology in Computer Science',
