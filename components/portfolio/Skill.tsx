@@ -4,8 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'framer-motion';
 import { FiCode, FiCpu, FiDatabase, FiLayers, FiServer, FiSmartphone } from 'react-icons/fi';
 import { FaReact, FaNodeJs, FaPython, FaAws, FaDocker } from 'react-icons/fa';
-import { SiTypescript, SiNextdotjs, SiTailwindcss, SiGraphql, SiPostgresql, SiRedis } from 'react-icons/si';
-import { TbBrandThreejs } from 'react-icons/tb';
+import { SiTypescript, SiNextdotjs, SiTailwindcss,  SiPostgresql, SiTensorflow, SiInternetarchive, SiArduino, SiMysql, SiMongodb } from 'react-icons/si';
 import { JSX } from 'react/jsx-runtime';
 import { Molle } from 'next/font/google';
 
@@ -14,7 +13,7 @@ import { Molle } from 'next/font/google';
   subsets: ['latin'],
 });
 
-type SkillCategory = 'frontend' | 'backend' | 'devops' | 'database' | 'mobile' | 'all';
+type SkillCategory = 'frontend' | 'backend' | 'devops' | 'database' | 'mobile' | 'AI' |'all';
 type SkillLevel = 'beginner' | 'intermediate' | 'advanced' | 'expert';
 
 
@@ -114,7 +113,7 @@ const Skill: React.FC<SkillProps> = ({ id }) => {
       icon: <FaNodeJs />,
       category: ['backend'],
       level: 'advanced',
-      experience: '4+ years',
+      experience: '2+ years',
       description: 'Building scalable server-side applications and APIs with Express, NestJS.',
       color: 'text-green-500'
     },
@@ -129,34 +128,25 @@ const Skill: React.FC<SkillProps> = ({ id }) => {
       color: 'text-yellow-400'
     },
     {
-      id: 'graphql',
-      name: 'GraphQL',
-      icon: <SiGraphql />,
-      category: ['backend'],
-      level: 'intermediate',
-      experience: '2+ years',
-      description: 'Schema design, resolvers, Apollo Server/Client implementation.',
-      color: 'text-pink-600'
-    },
+  id: 'nlp',
+  name: 'Natural Language Processing (NLP)',
+  icon: <SiTensorflow />,  // or any relevant AI/NLP icon you use
+  category: ['AI'],
+  level: 'intermediate',
+  experience: '1+ years',
+  description: 'Text preprocessing, sentiment analysis, and transformer-based models like BERT.',
+  color: 'text-indigo-600'
+},
+
     {
       id: 'postgresql',
       name: 'PostgreSQL',
       icon: <SiPostgresql />,
       category: ['database'],
       level: 'intermediate',
-      experience: '3+ years',
+      experience: '2+ years',
       description: 'Database design, query optimization, and advanced SQL features.',
       color: 'text-blue-700'
-    },
-    {
-      id: 'redis',
-      name: 'Redis',
-      icon: <SiRedis />,
-      category: ['database'],
-      level: 'intermediate',
-      experience: '2+ years',
-      description: 'Caching, session management, and pub/sub implementations.',
-      color: 'text-red-600'
     },
     {
       id: 'aws',
@@ -178,16 +168,50 @@ const Skill: React.FC<SkillProps> = ({ id }) => {
       description: 'Containerization, Docker Compose, and deployment workflows.',
       color: 'text-blue-500'
     },
+   
     {
-      id: 'threejs',
-      name: 'Three.js',
-      icon: <TbBrandThreejs />,
-      category: ['frontend'],
-      level: 'beginner',
-      experience: '1 year',
-      description: '3D visualizations and interactive WebGL experiences.',
-      color: 'text-gray-400'
-    }
+  id: 'iot',
+  name: 'Internet of Things (IoT)',
+  icon: <SiInternetarchive />,
+  category: ['backend', 'AI'],
+  level: 'intermediate',
+  experience: '1+ years',
+  description: 'Built smart systems integrating sensors, microcontrollers, and cloud services.',
+  color: 'text-green-600'
+},
+{
+  id: 'arduino',
+  name: 'Arduino',
+  icon: <SiArduino />,
+  category: ['backend', 'AI'],
+  level: 'intermediate',
+  experience: '1+ years',
+  description: 'Prototyped embedded systems, sensor integrations, and real-time device control.',
+  color: ',text-orange-600'
+},
+{
+  id: 'mongodb',
+  name: 'MongoDB',
+  icon: <SiMongodb />,
+  category: ['database'],
+  level: 'intermediate',
+  experience: '2+ years',
+  description: 'Designed NoSQL schemas, handled CRUD operations, and optimized queries for scalable applications.',
+  color: 'text-green-700'
+},
+{
+  id: 'sql',
+  name: 'SQL',
+  icon: <SiMysql />,
+  category: ['database'],
+  level: 'intermediate',
+  experience: '3+ years',
+  description: 'Performed data modeling, complex joins, query optimization, and database management.',
+  color: 'text-blue-700'
+}
+
+
+
   ];
 
   const filteredSkills = activeCategory === 'all' 

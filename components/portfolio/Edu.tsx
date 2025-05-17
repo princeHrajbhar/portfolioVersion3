@@ -126,20 +126,59 @@ const Edu: React.FC<EduProps> = ({ id }) => {
       type: 'education',
       skills: ['MS Excel', 'MS Word','Power Point','Tally Prime', 'HTML', 'CSS', 'IT','Grafic Designing using autodesk Maya & Bulender','Video Editing' ]
     },
-    {
-      id: 'exp-3',
-      title: 'Campus Ambassador',
-      company: 'TechFest Global',
-      position: 'Ambassador',
-      duration: 'Feb 2023 - May 2023',
-      description: [
-        'Promoted national-level coding contests on campus',
-        'Managed event logistics and student registrations',
-        'Increased event participation by 35%'
-      ],
-      type: 'experience',
-      skills: ['Public Speaking', 'Event Management', 'Networking']
-    },
+   {
+  id: 'exp-1',
+  title: 'Intern',
+  company: 'Indias International MoVement To United Nations (IIMUN)',
+  position: 'Intern',
+  duration: 'Feb 2023 - May 2023',
+  description: [
+    'Promoted IIMUN conferences and increased student engagement',
+    'Facilitated event promotions and campus outreach activities'
+  ],
+  type: 'experience',
+  skills: ['Communication', 'Marketing', 'Public Relations']
+},
+{
+  id: 'exp-2',
+  title: 'Team Leader',
+  company: 'E-Cell, SRM University Haryana',
+  position: 'Team Leader',
+  duration: 'Sep 2023 - Present',
+  description: [
+    'Led a team of 9 members to organize entrepreneurship events and workshops',
+    'Coordinated startup networking sessions and campus drives'
+  ],
+  type: 'experience',
+  skills: ['Leadership', 'Event Management', 'Team Coordination']
+},
+{
+  id: 'exp-3',
+  title: 'Freelancer',
+  company: 'Upwork',
+  position: 'Freelancer',
+  duration: 'Jul 2023 - Present',
+  description: [
+    'Completed freelance projects in content writing, data entry, and graphic design',
+    'Maintained client satisfaction and delivered projects on time'
+  ],
+  type: 'experience',
+  skills: ['Client Communication', 'Project Management', 'Content Creation']
+},
+{
+  id: 'exp-4',
+  title: 'HR Intern',
+  company: 'ADM NGO',
+  position: 'Human Resources Intern',
+  duration: 'Feb 2023 - May 2023',
+  description: [
+    'Handled volunteer recruitment and onboarding processes',
+    'Organized internal HR activities and maintained records'
+  ],
+  type: 'experience',
+  skills: ['HR Management', 'Recruitment', 'Team Coordination']
+},
+
     {
       id: 'cert-3',
       title: 'Python for Data Science',
