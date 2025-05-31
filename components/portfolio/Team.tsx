@@ -67,7 +67,7 @@ export default function TeamCollaboration({ id }: TeamProps) {
   {
     name: 'Priyanshu Dahiya',
     role: 'ML Eng.',
-    location: 'New Delhi',
+    location: 'SRMUH, Haryana',
     opinion: 'It was truly enjoyable collaborating with you. Your attention to detail and communication skills made this project a huge success.',
     avatar: '/default.jpg',
   },

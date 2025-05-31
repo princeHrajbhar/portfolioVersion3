@@ -65,7 +65,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ id }) => {
               viewport={{ once: true }}
               className="text-lg text-gray-600 dark:text-gray-300 mb-6"
             >
-              Passionate frontend developer with 5+ years of experience creating
+              Passionate frontend developer with 2+ years of experience creating
               beautiful, responsive, and user-friendly web applications.
             </motion.p>
 
@@ -77,9 +77,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ id }) => {
               className="space-y-4 text-gray-700 dark:text-gray-300"
             >
               <p>
-                I specialize in modern JavaScript frameworks like React and Next.js,
-                with a strong focus on creating accessible, performant user interfaces.
-                My approach combines technical expertise with an eye for design.
+                I specialize in developing intelligent solutions using machine learning, data analysis, and AI frameworks. With a strong foundation in Python, deep learning, and data-driven decision-making, I build scalable models and systems that solve real-world problems. My approach combines technical rigor with a deep understanding of data patterns and AI architecture.
               </p>
 
               <p>
