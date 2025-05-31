@@ -82,7 +82,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ id }) => {
 
               <p>
                 Currently working at <span className="font-medium text-purple-600 dark:text-purple-400">Tech Company</span> where
-                I lead the frontend development team and architect scalable solutions.
+                I lead the full stack development team and architect scalable solutions.
               </p>
 
               <p>
