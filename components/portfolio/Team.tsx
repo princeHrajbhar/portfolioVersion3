@@ -26,40 +26,50 @@ export default function TeamCollaboration({ id }: TeamProps) {
   const [autoScroll, setAutoScroll] = useState(true);
 
  const teamMembers: TeamMember[] = [
+ 
   {
-    name: 'Anshul Sharma',
-    role: 'Web Developer',
-    location: 'Uttar Pradesh',
-    opinion: 'Teaming up with you was a fantastic experience. Your attention to detail and communication skills made this project a huge success.',
-    avatar: '/anshul1.jpg',
+    name: 'Avinash Mishra',
+    role: 'Front End Developer',
+    location: 'MS College Mumbai',
+    opinion: 'Working together has been a game-changer. The dedication and technical insight displayed are truly impressive.',
+    avatar: '/avinash.png',
   },
   {
+    name: 'Devendra Yadav',
+    role: 'AI & ML Enthusiast',
+    location: 'Uttar Pradesh, India',
+    opinion: 'It’s rare to find someone who can combine innovation with practical execution so seamlessly. Highly recommend collaborating!',
+    avatar: '/devendra.jpg',
+  },
+  {
+    name: 'Ashna',
+    role: 'UI/UX Designer',
+    location: 'Manipal University Jaipur',
+    opinion: 'The project experience was excellent! Creative collaboration and attention to user experience really stood out.',
+    avatar: '/ashna.jpg',
+  },
+  {
+    name: 'Riya Verma',
+    role: 'Software Engineering Student',
+    location: 'Sharda University, Greater Noida',
+    opinion: 'Loved the professionalism and clarity throughout the project. The portfolio is both inspiring and well-organized.',
+    avatar: '/riya.jpg',
+  },
+
+
+  {
     name: 'Aadesh Maurya',
-    role: 'Blockchain Developer',
+    role: 'Blockchain and IoT Developer',
     location: 'New Delhi',
-    opinion: 'It was truly enjoyable collaborating with you. Your attention to detail and communication skills made this project a huge success.',
+    opinion: 'Teaming up with you was a fantastic experience. Your attention to detail and communication skills made this project a huge success.',
     avatar: '/aadesh.jpg',
   },
   {
-    name: 'Shivangi Verma',
-    role: 'Data Engineer',
-    location: 'Uttar Pradesh',
-    opinion: 'I genuinely appreciated the opportunity to work alongside you. Your attention to detail and communication skills made this project a huge success.',
-    avatar: '/shivangi.png',
-  },
-  {
-    name: 'Vansh Khatri',
-    role: 'Lead Developer',
+    name: 'Priyanshu Dahiya',
+    role: 'ML Eng.',
     location: 'New Delhi',
-    opinion: 'Partnering with you on this project was incredibly rewarding. Your attention to detail and communication skills made this project a huge success.',
-    avatar: '/vansh1.jpg',
-  },
-  {
-    name: 'Arpita Kaushik',
-    role: 'Data Analyst',
-    location: 'Haryana',
-    opinion: 'Collaborating with you brought great energy to the team. Your attention to detail and communication skills made this project a huge success.',
-    avatar: '/arpita.png',
+    opinion: 'It was truly enjoyable collaborating with you. Your attention to detail and communication skills made this project a huge success.',
+    avatar: '/default.jpg',
   },
   {
   name: 'Vanshika Bibipuria',
