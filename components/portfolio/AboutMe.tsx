@@ -77,7 +77,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ id }) => {
               className="space-y-4 text-gray-700 dark:text-gray-300"
             >
               <p>
-                I specialize in developing intelligent solutions using machine learning, data analysis, and AI frameworks. With a strong foundation in Python, deep learning, and data-driven decision-making, I build scalable models and systems that solve real-world problems. My approach combines technical rigor with a deep understanding of data patterns and AI architecture.
+                I develop intelligent solutions using machine learning, data analysis, and AI frameworks, leveraging Python and deep learning to build scalable, data-driven systems that solve real-world problems.
               </p>
 
               <p>
