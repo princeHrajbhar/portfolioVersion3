@@ -61,6 +61,22 @@ export default function TeamCollaboration({ id }: TeamProps) {
     opinion: 'Collaborating with you brought great energy to the team. Your attention to detail and communication skills made this project a huge success.',
     avatar: '/arpita.png',
   },
+  {
+  name: 'Vanshika Bibipuria',
+  role: 'Ful Stack Web Develoer',
+  location: 'Mody University, Rajasthan',
+  opinion: 'A well-crafted portfolio that reflects both creativity and professionalism. It’s inspiring to see how clearly the developer has showcased their journey and skills.',
+  avatar: '/vanshika.jpg', // You can download and rename the avatar or use the drive link if embedded
+},
+{
+  name: 'Sakshi Sain',
+  role: 'AI & ML Eng.',
+  location: 'Mody University, Rajasthan',
+  opinion: 'I am keenly interested in web development, databases, and AI tools. Currently working on some exciting projects to expand my technical knowledge.',
+  avatar: '/sakshi.jpg', // You can use the actual image or link from Drive
+},
+
+
 ];
 
 

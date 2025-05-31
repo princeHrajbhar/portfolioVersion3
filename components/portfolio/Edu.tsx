@@ -115,7 +115,7 @@ const Edu: React.FC<EduProps> = ({ id }) => {
       skills: ['current affair', 'reasoning','critical thinking', 'Problem Solving']
     },
      {
-      id: 'edu-3',
+      id: 'edu-4',
       title: 'Higher Secondary Education',
       institution: 'Mangal Murti Higher Secondary school Mumbai ',
       duration: '2019 - 2021',
