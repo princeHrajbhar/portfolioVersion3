@@ -35,10 +35,10 @@ const AboutMe: React.FC<AboutMeProps> = ({ id }) => {
                 {/* Purple-black filter overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-purple-900/20 to-transparent mix-blend-multiply rounded-2xl z-10"></div>
                 <Image
-                  src="/prince1.jpg"
+                  src="/prince10.png"
                   alt="Prince Kumar"
                   width={400}
-                  height={400}
+                  height={300}
                   className="relative rounded-2xl border-4 border-white dark:border-gray-800 shadow-xl w-full h-auto transform transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
