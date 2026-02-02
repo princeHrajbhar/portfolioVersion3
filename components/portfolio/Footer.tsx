@@ -158,16 +158,6 @@ export default function Footer() {
           </motion.div>
         </div>
 
-        {/* Mobile copyright (hidden on desktop) */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          viewport={{ once: true }}
-          className="mt-8 pt-4 border-t border-purple-900/20 text-center text-xs text-gray-400 md:hidden" // Added purple tint to border
-        >
-          &copy; {currentYear} DarkTheme. All rights reserved.
-        </motion.div>
       </div>
     </motion.footer>
   );

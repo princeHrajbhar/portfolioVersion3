@@ -212,7 +212,7 @@ const Skill: React.FC<SkillProps> = ({ id }) => {
   // Generate deterministic particle positions
   const getParticlePositions = () => {
     const positions = [];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 15; i++) { // Reduced particles for mobile
       const seed = i * 137.3;
       const x = Math.abs(Math.sin(seed) * 50 + 50);
       const y = Math.abs(Math.cos(seed * 0.7) * 50 + 50);
@@ -262,11 +262,11 @@ const Skill: React.FC<SkillProps> = ({ id }) => {
 
   const getLevelColor = (level: SkillLevel) => {
     switch (level) {
-      case 'beginner': return 'bg-blue-100 text-blue-800';
-      case 'intermediate': return 'bg-green-100 text-green-800';
-      case 'advanced': return 'bg-purple-100 text-purple-800';
-      case 'expert': return 'bg-yellow-100 text-yellow-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'beginner': return 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300';
+      case 'intermediate': return 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300';
+      case 'advanced': return 'bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300';
+      case 'expert': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300';
+      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-800/50 dark:text-gray-300';
     }
   };
 
@@ -287,18 +287,18 @@ const Skill: React.FC<SkillProps> = ({ id }) => {
       opacity: 1,
       transition: {
         when: "beforeChildren",
-        staggerChildren: 0.1
+        staggerChildren: 0.05 // Reduced stagger for faster mobile loading
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 10 },
     visible: {
       opacity: 1,
       y: 0,
       transition: { 
-        duration: 0.5,
+        duration: 0.4, // Faster animation for mobile
         ease: "easeOut"
       }
     }
@@ -307,16 +307,16 @@ const Skill: React.FC<SkillProps> = ({ id }) => {
   // Floating particles background
   const Particle = ({ x, y, color, delay }: { x: string; y: string; color: string; delay: number }) => (
     <motion.div
-      className={`absolute rounded-full ${color} w-2 h-2`}
+      className={`absolute rounded-full ${color} w-1.5 h-1.5`}
       initial={{ opacity: 0, y: 0 }}
       animate={{
-        opacity: [0, 0.6, 0],
-        y: [0, -40],
-        x: [0, Math.random() > 0.5 ? 20 : -20]
+        opacity: [0, 0.4, 0],
+        y: [0, -30],
+        x: [0, Math.random() > 0.5 ? 10 : -10]
       }}
       transition={{
         delay,
-        duration: 6 + Math.random() * 5,
+        duration: 5 + Math.random() * 3, // Reduced duration for mobile
         repeat: Infinity,
         ease: "easeInOut"
       }}
@@ -325,21 +325,23 @@ const Skill: React.FC<SkillProps> = ({ id }) => {
   );
 
   return (
-    <section id={id} className="">
+    <section id={id} className="relative">
       <div 
         ref={containerRef}
-        className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-purple-900 dark:via-black dark:to-purple-900 text-gray-900 dark:text-white p-4 md:p-8 lg:p-12 relative overflow-hidden"
+        className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-purple-900 dark:via-black dark:to-purple-900 text-gray-900 dark:text-white p-4 sm:p-6 md:p-8 relative overflow-hidden"
       >
         {/* Animated background particles - deterministic */}
-        {particlePositions.map((particle) => (
-          <Particle
-            key={particle.id}
-            x={particle.x}
-            y={particle.y}
-            color={particle.color}
-            delay={particle.delay}
-          />
-        ))}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {particlePositions.map((particle) => (
+            <Particle
+              key={particle.id}
+              x={particle.x}
+              y={particle.y}
+              color={particle.color}
+              delay={particle.delay}
+            />
+          ))}
+        </div>
 
         {/* Floating skill icons in background - deterministic */}
         <motion.div 
@@ -355,7 +357,7 @@ const Skill: React.FC<SkillProps> = ({ id }) => {
                 style={{
                   left: position.left,
                   top: position.top,
-                  fontSize: `${isMobile ? '2rem' : '4rem'}`
+                  fontSize: isMobile ? '1.5rem' : '4rem'
                 }}
                 animate={{
                   rotate: [0, 360],
@@ -376,52 +378,56 @@ const Skill: React.FC<SkillProps> = ({ id }) => {
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Header with 3D effect */}
           <motion.div
-            initial={{ opacity: 0, y: -40 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, type: 'spring' }}
-            className="mb-12 text-center"
+            transition={{ duration: 0.6, type: 'spring' }}
+            className="mb-8 md:mb-12 text-center px-2"
           >
             <motion.h1
-              className={`${molle.className} text-4xl md:text-6xl pt-8 font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-green-500`}
-              whileHover={{ scale: 1.02 }}
+              className={`${molle.className} text-3xl sm:text-4xl md:text-5xl lg:text-6xl pt-4 md:pt-8 font-bold mb-3 md:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-green-500`}
+              whileHover={{ scale: isMobile ? 1 : 1.02 }}
             >
               My Skills & Expertise
             </motion.h1>
             <motion.p 
-              className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
+              className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.2 }}
             >
               Technologies I&apos;ve mastered and tools I use to build amazing digital experiences
             </motion.p>
           </motion.div>
 
-          {/* Interactive category tabs */}
+          {/* Interactive category tabs - Scrollable on mobile */}
           <motion.div 
-            className="flex flex-wrap gap-3 mb-12 justify-center"
+            className="flex flex-nowrap md:flex-wrap gap-2 md:gap-3 mb-8 md:mb-12 px-2 overflow-x-auto pb-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.3 }}
+            style={{ 
+              scrollbarWidth: 'thin',
+              scrollbarColor: 'rgba(156, 163, 175, 0.5) transparent'
+            }}
           >
             {categories.map((category) => (
               <motion.button
                 key={category.id}
-                whileHover={{ 
+                whileHover={!isMobile ? { 
                   scale: 1.05,
                   y: -3,
                   boxShadow: "0 10px 20px rgba(0,0,0,0.1)"
-                }}
+                } : {}}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setActiveCategory(category.id)}
-                className={`px-5 py-2.5 rounded-lg font-medium transition-all relative overflow-hidden flex items-center gap-2 ${
+                className={`flex-shrink-0 px-4 py-2 md:px-5 md:py-2.5 rounded-lg font-medium transition-all relative overflow-hidden flex items-center gap-2 whitespace-nowrap ${
                   activeCategory === category.id
                     ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                    : 'bg-white bg-gradient-to-br dark:from-purple-900 dark:via-black dark:to-purple-900 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-purple-700 shadow'
+                    : 'bg-gradient-to-br dark:from-purple-900/80 dark:via-black/80 dark:to-purple-900/80 backdrop-blur-sm text-gray-300 border border-gray-700 shadow hover:border-gray-600'
                 }`}
               >
                 {category.icon}
-                {category.name}
+                <span className="text-sm md:text-base">{category.name}</span>
                 {activeCategory === category.id && (
                   <motion.span
                     layoutId="activeCategoryIndicator"
@@ -439,7 +445,7 @@ const Skill: React.FC<SkillProps> = ({ id }) => {
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             variants={containerVariants}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 px-2"
           >
             {filteredSkills.map((skill, index) => (
               <motion.div
@@ -450,72 +456,93 @@ const Skill: React.FC<SkillProps> = ({ id }) => {
                 onMouseEnter={() => !isMobile && setIsHovering(skill.id)}
                 onMouseLeave={() => !isMobile && setIsHovering(null)}
               >
-                {/* Skill card */}
+                {/* Skill card - Using the same gradient as main page */}
                 <motion.div
                   onClick={() => setSelectedSkill(selectedSkill?.id === skill.id ? null : skill)}
-                  className={`h-full bg-white bg-gradient-to-br dark:from-purple-900 dark:via-black dark:to-purple-900 rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 border border-gray-200 dark:border-gray-700 ${
+                  className={`h-full bg-gradient-to-br dark:from-purple-900/90 dark:via-black/90 dark:to-purple-900/90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 border border-gray-700 ${
                     selectedSkill?.id === skill.id 
-                      ? 'ring-2 ring-blue-500 dark:ring-blue-400' 
-                      : 'hover:shadow-xl'
+                      ? 'ring-2 ring-blue-500' 
+                      : 'hover:shadow-xl hover:border-gray-600'
                   }`}
                   whileHover={!isMobile ? { 
                     y: -5,
-                    boxShadow: "0 15px 30px -5px rgba(0,0,0,0.1)"
+                    boxShadow: "0 15px 30px -5px rgba(0,0,0,0.2)"
                   } : {}}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <div className="p-6">
+                  <div className="p-4 md:p-6">
                     {/* Skill icon with floating animation */}
                     <motion.div
                       animate={{
-                        y: isHovering === skill.id ? [0, -5, 0] : 0,
-                        rotate: isHovering === skill.id ? [0, 10, -10, 0] : 0
+                        y: isHovering === skill.id && !isMobile ? [0, -5, 0] : 0,
+                        rotate: isHovering === skill.id && !isMobile ? [0, 10, -10, 0] : 0
                       }}
                       transition={{
                         duration: 2,
                         repeat: Infinity,
                         ease: "easeInOut"
                       }}
-                      className={`text-4xl mb-4 ${skill.color}`}
+                      className={`text-3xl md:text-4xl mb-3 md:mb-4 ${skill.color}`}
                     >
                       {skill.icon}
                     </motion.div>
 
-                    <h3 className="text-xl font-bold mb-1">{skill.name}</h3>
-                    <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${getLevelColor(skill.level)}`}>
-                      {skill.level.charAt(0).toUpperCase() + skill.level.slice(1)}
-                    </span>
-
-                    {/* Experience bar */}
-                    <div className="mt-3 mb-4 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <motion.div 
-                        className={`h-2 rounded-full ${getLevelColor(skill.level).replace('text', 'bg')}`}
-                        initial={{ width: 0 }}
-                        animate={{ width: getLevelWidth(skill.level) }}
-                        transition={{ delay: 0.3, duration: 1, type: 'spring' }}
-                      />
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+                      <h3 className="text-lg md:text-xl font-bold text-white truncate">
+                        {skill.name}
+                      </h3>
+                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${getLevelColor(skill.level)} w-fit`}>
+                        {skill.level.charAt(0).toUpperCase() + skill.level.slice(1)}
+                      </span>
                     </div>
 
-                    <p className="text-sm text-gray-600 dark:text-gray-300">{skill.experience} experience</p>
+                    {/* Experience bar */}
+                    <div className="mb-3 md:mb-4">
+                      <div className="text-xs text-gray-300 mb-1">
+                        {skill.experience} experience
+                      </div>
+                      <div className="w-full bg-gray-700 rounded-full h-1.5 md:h-2">
+                        <motion.div 
+                          className={`h-1.5 md:h-2 rounded-full ${
+                            skill.level === 'beginner' ? 'bg-blue-500' :
+                            skill.level === 'intermediate' ? 'bg-green-500' :
+                            skill.level === 'advanced' ? 'bg-purple-500' :
+                            'bg-yellow-500'
+                          }`}
+                          initial={{ width: 0 }}
+                          animate={{ width: getLevelWidth(skill.level) }}
+                          transition={{ delay: 0.2, duration: 0.8, type: 'spring' }}
+                        />
+                      </div>
+                    </div>
 
                     {/* Expanded details */}
                     <AnimatePresence>
                       {selectedSkill?.id === skill.id && (
                         <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="mt-4 overflow-hidden"
+                          initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                          animate={{ opacity: 1, height: 'auto', marginTop: '1rem' }}
+                          exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden"
                         >
-                          <p className="text-sm text-gray-700 dark:text-gray-200">{skill.description}</p>
+                          <p className="text-xs md:text-sm text-gray-300 pt-3 border-t border-gray-700">
+                            {skill.description}
+                          </p>
                         </motion.div>
                       )}
                     </AnimatePresence>
+
+                    {/* Show hint on mobile */}
+                    {!selectedSkill?.id && (
+                      <div className="text-xs text-gray-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        {isMobile ? 'Tap to see details' : 'Click to see details'}
+                      </div>
+                    )}
                   </div>
                 </motion.div>
 
-                {/* Glow effect */}
+                {/* Glow effect - desktop only */}
                 {isHovering === skill.id && !isMobile && (
                   <motion.div
                     className="absolute inset-0 rounded-xl bg-blue-500/10 pointer-events-none"
@@ -533,18 +560,35 @@ const Skill: React.FC<SkillProps> = ({ id }) => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-center py-12"
+              className="text-center py-8 md:py-12"
             >
-              <div className="text-5xl mb-4">🧐</div>
-              <h3 className="text-xl font-bold mb-2">No skills found in this category</h3>
-              <p className="text-gray-600 dark:text-gray-400">Try selecting a different category above</p>
+              <div className="text-4xl md:text-5xl mb-4">🧐</div>
+              <h3 className="text-lg md:text-xl font-bold mb-2 text-white">
+                No skills found in this category
+              </h3>
+              <p className="text-gray-400 text-sm md:text-base">
+                Try selecting a different category above
+              </p>
             </motion.div>
           )}
         </div>
 
-        {/* 3D floating action button */}
+        {/* Scroll indicator for mobile */}
+        {isMobile && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.8 }}
+            className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-40"
+          >
+            <div className="text-xs text-gray-300 bg-gradient-to-r from-purple-900/80 to-black/80 backdrop-blur-sm px-3 py-1.5 rounded-full shadow border border-gray-700">
+              Scroll →
+            </div>
+          </motion.div>
+        )}
+
+        {/* 3D floating action button - Using the same gradient */}
         <motion.div
-          className="fixed bottom-8 right-8 z-50"
+          className="fixed bottom-8 right-8 z-30"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5 }}
@@ -561,6 +605,24 @@ const Skill: React.FC<SkillProps> = ({ id }) => {
           </motion.button>
         </motion.div>
       </div>
+
+      {/* Add custom scrollbar styles */}
+      <style jsx>{`
+        .overflow-x-auto::-webkit-scrollbar {
+          height: 4px;
+        }
+        .overflow-x-auto::-webkit-scrollbar-track {
+          background: rgba(156, 163, 175, 0.1);
+          border-radius: 10px;
+        }
+        .overflow-x-auto::-webkit-scrollbar-thumb {
+          background: rgba(156, 163, 175, 0.5);
+          border-radius: 10px;
+        }
+        .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+          background: rgba(156, 163, 175, 0.7);
+        }
+      `}</style>
     </section>
   );
 };
